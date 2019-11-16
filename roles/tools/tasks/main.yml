@@ -1,7 +1,8 @@
 - homebrew:
-    name: ['htop']
+    name: '{{ packages }}'
   when: ansible_facts['os_family'] == 'Darwin'
 
 - pacman:
-    name: ['htop']
+    name: '{{ packages }}'
+  become: yes
   when: ansible_facts['os_family'] == 'Archlinux'
