@@ -1,3 +1,4 @@
+---
 - name: Add localhost to /etc/ansible/hosts
   lineinfile:
     path: /etc/ansible/hosts
@@ -18,6 +19,9 @@
     name: git
     state: present
   when: ansible_facts['os_family'] == 'Darwin'
+
+- include: arch.yml
+  when: ansible_os_family == 'Archlinux'
 
 - name: Clone ansible-localhost repository
   git:
