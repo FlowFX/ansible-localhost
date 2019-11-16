@@ -1,0 +1,28 @@
+- package:
+    name: ufw
+    state: present
+  become: yes
+
+- systemd:
+    name: ufw.service
+    scope: system
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Deny everything and enable UFW
+  ufw:
+    state: enabled
+    policy: deny
+  become: yes
+
+- name: Allow Syncthing
+  ufw:
+    rule: allow
+    name: syncthing
+  become: yes
+
+- name: Set logging
+  ufw:
+    logging: 'on'
+  become: yes
