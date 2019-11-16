@@ -1,0 +1,21 @@
+- name: Clone dotfiles
+  git:
+    repo: 'https://github.com/thoughtbot/dotfiles/'
+    dest: ~/dotfiles
+    update: yes
+
+- name: Clone dotfiles-local
+  git:
+    repo: 'git@github.com:FlowFX/dotfiles.git'
+    dest: ~/dotfiles-local
+    force: no
+    update: no
+
+- name: Install RCM
+  aur:
+    name: rcm
+  when: ansible_os_family == 'Archlinux'
+
+- homebrew_tap:
+    name: thoughtbot/formulae
+  when: ansible_os_family == 'Darwin'

@@ -2,5 +2,6 @@
   roles:
     - bootstrap
     - common
+    - dotfiles
     - firewall
     - caldav
