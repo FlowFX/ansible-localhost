@@ -6,3 +6,17 @@
     name: '{{ packages }}'
   become: yes
   when: ansible_facts['os_family'] == 'Archlinux'
+
+- pacman:
+    name: '{{ packages_arch }}'
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Enable NTP Service
+  systemd:
+    name: ntpd.service
+    scope: system
+    enabled: yes
+    state: started
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
