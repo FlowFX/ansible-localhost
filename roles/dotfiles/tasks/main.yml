@@ -3,13 +3,16 @@
     repo: 'https://github.com/thoughtbot/dotfiles/'
     dest: ~/dotfiles
     update: yes
+  notify:
+    - run rcup
 
 - name: Clone dotfiles-local
   git:
     repo: 'git@github.com:FlowFX/dotfiles.git'
     dest: ~/dotfiles-local
-    force: no
     update: no
+  notify:
+    - run rcup
 
 - name: Install RCM
   aur:
