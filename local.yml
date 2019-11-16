@@ -1,5 +1,3 @@
 - hosts: localhost
-  tasks:
-  - name: Install htop
-    package:
-      name: htop
+  roles:
+    - tools
