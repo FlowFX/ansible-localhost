@@ -1,3 +1,7 @@
-- name: Install command-line tools
-  homebrew:
+- homebrew:
     name: ['htop']
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- pacman:
+    name: ['htop']
+  when: ansible_facts['os_family'] == 'Archlinux'
