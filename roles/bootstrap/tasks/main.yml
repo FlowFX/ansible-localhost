@@ -1,0 +1,7 @@
+- name: Add localhost to /etc/ansible/hosts
+  lineinfile:
+    path: /etc/ansible/hosts
+    regexp: '^localhost'
+    line: 'localhost ansible_connection=local'
+    create: yes
+  become: yes
