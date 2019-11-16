@@ -5,3 +5,8 @@
     line: 'localhost ansible_connection=local'
     create: yes
   become: yes
+- name: Clone ansible-localhost repository
+  git:
+    repo: git@github.com:flowfx/ansible-localhost.git
+    dest: ~/code/ansible-localhost
+    update: no
