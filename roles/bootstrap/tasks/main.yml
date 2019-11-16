@@ -5,8 +5,23 @@
     line: 'localhost ansible_connection=local'
     create: yes
   become: yes
+
+- name: Install Git
+  pacman:
+    name: git
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Install Git
+  homebrew:
+    name: git
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+
 - name: Clone ansible-localhost repository
   git:
     repo: git@github.com:flowfx/ansible-localhost.git
     dest: ~/code/ansible-localhost
     update: no
+
