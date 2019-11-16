@@ -1,0 +1,6 @@
+---
+packages: [
+            'todoman',
+            'vdirsyncer',
+            'pass'
+          ]
