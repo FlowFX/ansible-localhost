@@ -8,3 +8,8 @@ Install Ansible AUR plugin. It's only required on Arch linux, but if it's not th
 ```
 $ git clone https://github.com/kewlfft/ansible-aur.git ~/.ansible/plugin/modules/aur
 ```
+
+Run the playbook.
+```
+$ ansible-pull -U https://github.com/flowfx/ansible-localhost.git
+```
