@@ -10,7 +10,7 @@
   git:
     repo: 'git@github.com:FlowFX/dotfiles.git'
     dest: ~/dotfiles-local
-    update: yes
+    update: no
   notify:
     - run rcup
 
