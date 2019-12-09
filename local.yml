@@ -5,4 +5,5 @@
     - dotfiles
     - firewall
     - caldav
+    - i3
     - { role: mediakeys, when: ansible_os_family == 'Archlinux' }
