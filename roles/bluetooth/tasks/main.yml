@@ -1,0 +1,13 @@
+- name: Install Bluetooth
+  pacman:
+    name: ['pulseaudio-bluetooth', 'bluez', 'bluez-utils']
+    state: present
+  become: yes
+
+- name: Enable bluetooth.service
+  systemd:
+    name: bluetooth.service
+    scope: system
+    enabled: yes
+    state: started
+  become: yes
