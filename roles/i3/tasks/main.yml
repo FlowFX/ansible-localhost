@@ -1,4 +1,16 @@
-- package:
-    name: ['i3-wm', 'arandr', 'xcape']
+- name: Install Xorg, i3, and utilities
+  package:
+    name: [
+      'xorg-server',
+      'xorg-apps',
+      'i3-wm',
+      'arandr',
+      'xcape'
+      ]
     state: present
   become: yes
+
+- name: Install fonts from AUR
+  aur:
+    name: ttf-google-fonts-git
+    skip_installed: yes
