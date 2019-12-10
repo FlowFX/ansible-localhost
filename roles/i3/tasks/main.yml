@@ -1,4 +1,4 @@
 - package:
-    name: i3
+    name: ['i3-wm', 'arandr', 'xcape']
     state: present
   become: yes
