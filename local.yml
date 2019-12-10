@@ -6,4 +6,6 @@
     - firewall
     - caldav
     - i3
-    - { role: mediakeys, when: ansible_os_family == 'Archlinux' }
+    # Mediakeys role was initially created for Wayland. When using i3,
+    # all of the media keys are configured in the i3 config.
+    # - { role: mediakeys, when: ansible_os_family == 'Archlinux' }
