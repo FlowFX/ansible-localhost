@@ -20,3 +20,13 @@
     state: started
   become: yes
   when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Copy X11 keyboard settings
+  copy:
+    src: 00-keyboard.conf
+    dest: /etc/X11/xorg.conf.d/00-keyboard.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
