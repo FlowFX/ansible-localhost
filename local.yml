@@ -4,6 +4,7 @@
     - common
     - dotfiles
     - firewall
+    - backup
     - caldav
     - { role: i3, when: ansible_os_family == 'Archlinux' }
     # Mediakeys role was initially created for Wayland. When using i3,
