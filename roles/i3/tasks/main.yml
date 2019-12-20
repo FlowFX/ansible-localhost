@@ -15,11 +15,3 @@
   aur:
     name: ttf-google-fonts-git
     skip_installed: yes
-
-- name: Enable autorandr service
-  systemd:
-    name: autorandr.service
-    scope: system
-    enabled: yes
-    state: started
-  become: yes
