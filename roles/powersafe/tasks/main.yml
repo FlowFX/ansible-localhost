@@ -12,11 +12,3 @@
     enabled: yes
     state: started
   become: yes
-
-- name: Enable TLP-sleep service
-  systemd:
-    name: tlp-sleep.service
-    scope: system
-    enabled: yes
-    state: started
-  become: yes
