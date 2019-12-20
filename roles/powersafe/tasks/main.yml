@@ -12,3 +12,17 @@
     enabled: yes
     state: started
   become: yes
+
+- name: Ensure SuspendThenHibernate is enabled
+  lineinfile:
+    path: /etc/systemd/sleep.conf
+    regexp: '^AllowSuspendThenHibernate='
+    line: AllowSuspendThenHibernate=yes
+  become: yes
+
+- name: Ensure SuspendThenHibernate is delayed for 3h
+  lineinfile:
+    path: /etc/systemd/sleep.conf
+    regexp: '^HibernateDelaySec='
+    line: HibernateDelaySec=10800
+  become: yes
