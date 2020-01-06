@@ -11,3 +11,4 @@
     # all of the media keys are configured in the i3 config.
     # - { role: mediakeys, when: ansible_os_family == 'Archlinux' }
     - { role: powersafe, when: ansible_os_family == 'Archlinux' }
+    - email

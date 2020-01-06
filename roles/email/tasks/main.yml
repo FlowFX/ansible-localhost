@@ -1,0 +1,8 @@
+# https://wiki.archlinux.org/index.php/OfflineIMAP
+# https://wiki.archlinux.org/index.php/Systemd/Timers
+- package:
+    name: offlineimap
+    state: present
+  become: yes
+  when: (ansible_facts['os_family'] == 'Archlinux') or
+        (ansible_facts['os_family'] == 'Debian')
