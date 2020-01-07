@@ -1,6 +1,0 @@
-- name: restart acpid
-  systemd:
-    name: acpid.service
-    scope: system
-    state: restarted
-  become: yes

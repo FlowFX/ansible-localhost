@@ -19,6 +19,7 @@
     name: rcm
   when: ansible_os_family == 'Archlinux'
 
-- homebrew_tap:
+- name: Install RCM
+  homebrew_tap:
     name: thoughtbot/formulae
   when: ansible_os_family == 'Darwin'

@@ -4,8 +4,8 @@
       'xorg-server',
       'xorg-apps',
       'i3-wm',
-      'arandr',
       'xcape',
+      'arandr',
       'autorandr'
       ]
     state: present
