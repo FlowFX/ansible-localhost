@@ -7,11 +7,11 @@
   become: yes
 
 - name: Install Git
-  pacman:
+  package:
     name: git
     state: present
   become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
+  when: ansible_facts['os_family'] != 'Darwin'
 
 - name: Install Git
   homebrew:
@@ -19,17 +19,11 @@
     state: present
   when: ansible_facts['os_family'] == 'Darwin'
 
-- include: arch.yml
-  when: ansible_os_family == 'Archlinux'
-
 - name: Clone ansible-localhost repository
   git:
     repo: git@github.com:flowfx/ansible-localhost.git
     dest: ~/code/ansible-localhost
     update: no
 
-- name: Ensure ansible-aur plugin is up-to date
-  git:
-    repo: 'https://github.com/kewlfft/ansible-aur.git'
-    dest: ~/.ansible/plugins/modules/aur
-    update: yes
+- include: arch.yml
+  when: ansible_os_family == 'Archlinux'
