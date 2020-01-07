@@ -14,4 +14,5 @@
     name: vdirsyncer.timer
     scope: user
     enabled: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
 
