@@ -6,7 +6,9 @@
       'i3-wm',
       'xcape',
       'arandr',
-      'autorandr'
+      'autorandr',
+      'maim',
+      'xclip'
       ]
     state: present
   become: yes
