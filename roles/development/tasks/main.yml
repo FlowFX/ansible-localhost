@@ -1,0 +1,9 @@
+# https://pypi.org/project/pipx/
+- homebrew:
+    name: ['pipx']
+  when: ansible_facts['os_family'] == 'Darwin'
+
+# - package:
+#     name: ['pipx']
+#   become: yes
+#   when: ansible_facts['os_family'] != 'Darwin'
