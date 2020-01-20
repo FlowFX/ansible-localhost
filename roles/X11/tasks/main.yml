@@ -15,7 +15,13 @@
 
 - name: Install fonts from AUR
   aur:
-    name: ttf-google-fonts-git
+    name: [
+      'ttf-google-fonts-git',
+      'noto-fonts',
+      'noto-fonts-extra',
+      'noto-fonts-emoji',
+      'jetbrains-mono'
+      ]
     skip_installed: yes
 
 - name: Copy X11 keyboard settings
