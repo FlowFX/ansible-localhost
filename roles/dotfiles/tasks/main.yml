@@ -14,12 +14,12 @@
   notify:
     - run rcup
 
-- name: Install RCM
+- name: Install RCM on ArchLinux
   aur:
     name: rcm
   when: ansible_os_family == 'Archlinux'
 
-- name: Install RCM
+- name: Install RCM on OSX
   homebrew_tap:
     name: thoughtbot/formulae
   when: ansible_os_family == 'Darwin'
