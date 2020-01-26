@@ -1,10 +1,24 @@
 # https://wiki.archlinux.org/index.php/OfflineIMAP
 - package:
-    name: ['offlineimap', 'neomutt', 'msmtp', 'w3m']
+    name: [
+      'gpgme',
+      'khard',
+      'msmtp',
+      'neomutt',
+      'offlineimap',
+      'urlscan',
+      'vdirsyncer',
+      'w3m'
+      ]
     state: present
   become: yes
   when: (ansible_facts['os_family'] == 'Archlinux') or
         (ansible_facts['os_family'] == 'Debian')
+
+- aur:
+    name: 'ripmime'
+    state: present
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: Disable offlineimap-oneshot timer
   systemd:
