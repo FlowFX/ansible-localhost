@@ -1,6 +1,10 @@
 ---
+- include: logind_conf.yml
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+- include: sleep_conf.yml
+  when: ansible_facts['os_family'] == 'Archlinux'
+
 - include: tlp.yml
   when: ansible_facts['os_family'] == 'Archlinux'
 
-- include: suspend_then_hibernate.yml
-  when: ansible_facts['os_family'] == 'Archlinux'
