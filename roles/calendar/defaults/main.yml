@@ -2,5 +2,6 @@
 packages: [
             'todoman',
             'vdirsyncer',
-            'pass'
+            'pass',
+            'khal'
           ]

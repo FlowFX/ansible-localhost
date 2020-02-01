@@ -5,7 +5,7 @@
     - dotfiles
     - firewall
     - backup
-    - caldav
+    - calendar
     - email
     - powersafe
     - development
