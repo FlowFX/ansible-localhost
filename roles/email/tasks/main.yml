@@ -18,6 +18,7 @@
 - name: Install ripmime
   aur:
     name: 'ripmime'
+    skip_installed: yes
   when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: Disable offlineimap-oneshot timer
