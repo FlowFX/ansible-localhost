@@ -1,0 +1,4 @@
+- name: Install OneDrive sync
+  aur:
+    name: onedrive-abraunegg
+    skip_installed: yes
