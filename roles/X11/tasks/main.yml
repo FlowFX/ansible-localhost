@@ -33,3 +33,13 @@
     mode: '0644'
   become: yes
   when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Copy X11 monitor settings
+  copy:
+    src: 10-monitor.conf
+    dest: /etc/X11/xorg.conf.d/10-monitor.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'

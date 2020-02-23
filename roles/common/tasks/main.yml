@@ -20,3 +20,18 @@
     state: started
   become: yes
   when: ansible_facts['os_family'] == 'Archlinux'
+
+# Cleaning the package cache
+# https://wiki.archlinux.org/index.php/pacman#Cleaning_the_package_cache
+- pacman:
+    name: pacman-contrib
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Enable paccache.timer
+  systemd:
+    name: paccache.timer
+    scope: system
+    enabled: yes
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
