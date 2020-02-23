@@ -2,3 +2,4 @@
   aur:
     name: onedrive-abraunegg
     skip_installed: yes
+  when: ansible_facts['os_family'] == 'Archlinux'

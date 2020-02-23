@@ -17,6 +17,7 @@
 - name: Install RCM on ArchLinux
   aur:
     name: rcm
+    skip_installed: yes
   when: ansible_os_family == 'Archlinux'
 
 - name: Install RCM on OSX
