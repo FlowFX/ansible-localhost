@@ -5,9 +5,9 @@
     line: AllowSuspendThenHibernate=yes
   become: yes
 
-- name: Ensure SuspendThenHibernate is delayed for 3h
+- name: Ensure SuspendThenHibernate is delayed for 6h
   lineinfile:
     path: /etc/systemd/sleep.conf
     regexp: '^HibernateDelaySec='
-    line: HibernateDelaySec=10800
+    line: HibernateDelaySec=21600
   become: yes
