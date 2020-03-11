@@ -4,6 +4,8 @@
     regexp: '^AllowSuspendThenHibernate='
     line: AllowSuspendThenHibernate=yes
   become: yes
+  notify:
+    - reread systemd configs
 
 - name: Ensure SuspendThenHibernate is delayed for 6h
   lineinfile:
@@ -11,3 +13,5 @@
     regexp: '^HibernateDelaySec='
     line: HibernateDelaySec=21600
   become: yes
+  notify:
+    - reread systemd configs
