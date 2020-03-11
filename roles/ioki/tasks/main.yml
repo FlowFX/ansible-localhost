@@ -2,3 +2,6 @@
   aur:
     name: onedrive-abraunegg
     skip_installed: yes
+
+- include: wine.yml
+  when: ansible_facts['os_family'] == 'Archlinux'
