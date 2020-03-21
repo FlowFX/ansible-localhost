@@ -3,6 +3,7 @@
     name: ['pulseaudio-bluetooth', 'bluez', 'bluez-utils']
     state: present
   become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
 
 - name: Enable bluetooth.service
   systemd:
@@ -11,3 +12,4 @@
     enabled: yes
     state: started
   become: yes
+  when: ansible_facts['os_family'] != 'Darwin'

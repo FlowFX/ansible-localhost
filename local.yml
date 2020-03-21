@@ -3,6 +3,7 @@
     - bootstrap
     - common
     - dotfiles
+    - bluetooth
     - firewall
     - backup
     - calendar
