@@ -1,0 +1,4 @@
+---
+- name: run pacman -Sy
+  pacman:
+    update_cache: yes
