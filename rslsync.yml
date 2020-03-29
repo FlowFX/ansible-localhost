@@ -1,0 +1,24 @@
+---
+- name: Install Resilio Sync
+  aur:
+    name: rslsync
+    skip_installed: yes
+  when: ansible_os_family == 'Archlinux'
+  tags: rslsync
+
+- name: Hardlink config file
+  # Softlink doesn't work with rslsync
+  file:
+    src: /home/flowfx/dotfiles-local/config/rslsync/rslsync.conf
+    dest: /home/flowfx/.config/rslsync/rslsync.conf
+    state: hard
+  tags: rslsync
+
+- name: Enable and start rslsync-service
+  systemd:
+    name: rslsync.service
+    scope: user
+    enabled: yes
+    state: started
+  when: ansible_facts['os_family'] == 'Archlinux'
+  tags: rslsync
