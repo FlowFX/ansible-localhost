@@ -12,3 +12,7 @@
     - development
     - { role: X11, when: ansible_os_family != 'Darwin' }
     - ioki
+  tasks:
+    - include_tasks: rslsync.yml
+      tags: rslsync
+      when: ansible_os_family == 'Archlinux'
