@@ -1,36 +1,3 @@
-# https://wiki.archlinux.org/index.php/OfflineIMAP
-- package:
-    name: [
-      'gpgme',
-      'khard',
-      'msmtp',
-      'neomutt',
-      'offlineimap',
-      'urlscan',
-      'vdirsyncer',
-      'w3m'
-      ]
-    state: present
-  become: yes
-  when: (ansible_facts['os_family'] == 'Archlinux') or
-        (ansible_facts['os_family'] == 'Debian')
-
-- name: Install ripmime
-  aur:
-    name: 'ripmime'
-    skip_installed: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-
-- name: Disable offlineimap-oneshot timer
-  systemd:
-    name: offlineimap-oneshot.timer
-    scope: user
-    enabled: no
-    state: stopped
-  when: (ansible_facts['os_family'] == 'Archlinux') or
-        (ansible_facts['os_family'] == 'Debian')
-
-- name: Create Mutt headers cache directory
-  file:
-    path: ~/.cache/neomutt/headers
-    state: directory
+- include: offlineimap.yml
+- include: contacts.yml
+- include: neomutt.yml

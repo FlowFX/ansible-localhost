@@ -1,0 +1,36 @@
+# Linux
+- package:
+    name: [
+      'gpgme',
+      'msmtp',
+      'neomutt',
+      'urlscan',
+      'w3m'
+      ]
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+
+# TODO: install ripmime on Debian system?
+- name: Install ripmime
+  aur:
+    name: 'ripmime'
+    skip_installed: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+# macOS
+- homebrew:
+    name: [
+      'gpgme',
+      'msmtp',
+      'neomutt',
+      'urlscan',
+      'w3m'
+      ]
+  when: ansible_facts['os_family'] == 'Darwin'
+
+# All systems
+- name: Create Mutt headers cache directory
+  file:
+    path: ~/.cache/neomutt/headers
+    state: directory
