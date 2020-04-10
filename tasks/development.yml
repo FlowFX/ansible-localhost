@@ -3,7 +3,7 @@
 - name: Ensure direnv is installed on Linux
   package:
     name: direnv
-    stage: present
+    state: present
   become: yes
   when: ansible_facts['os_family'] != 'Darwin'
   tags: development
