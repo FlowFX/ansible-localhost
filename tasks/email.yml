@@ -72,12 +72,18 @@
       # 'gpgme',
       'msmtp',
       'neomutt',
-      'urlscan',
       'w3m',
       'ripmime'
       ]
   when: ansible_facts['os_family'] == 'Darwin'
   tags: [ email, mutt ]
+
+  #- name: Install urlscan on macOS
+  # Use pipx!!! But needs to install pipx first
+  # pipx:
+  #   name: urlscan
+  # when: ansible_facts['os_family'] == 'Darwin'
+  # tags: [ email, mutt ]
 
 - name: Create Mail directory
   file:

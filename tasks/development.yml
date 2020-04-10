@@ -1,9 +1,17 @@
 ---
 # direnv is used for development at ioki
-- name: Ensure direnv is installed
+- name: Ensure direnv is installed on Linux
   package:
     name: direnv
+    stage: present
   become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: development
+
+- name: Ensure direnv is installed on macOS
+  homebrew:
+    name: direnv
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: development
 
 - name: Ensure dependencies for asdf are present on Linux

@@ -39,7 +39,7 @@
       when: ansible_facts['os_family'] != 'Darwin'
     - name: Install encryption packages
       homebrew:
-        name: ['gnupg', 'gpg-agent', 'pass']
+        name: ['gnupg', 'pass']
       when: ansible_facts['os_family'] == 'Darwin'
 
     - name: Install and configure X11

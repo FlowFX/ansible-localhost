@@ -1,9 +1,16 @@
 ---
-- name: Ensure ZSH and Git are present
+- name: Ensure ZSH and Git are present on Linux
   package:
     name: ['zsh', 'git']
     state: present
   become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: zsh
+
+- name: Ensure ZSH and Git are present on macOS
+  homebrew:
+    name: ['zsh', 'git']
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: zsh
 
 - name: Set user shell to ZSH on Linux
