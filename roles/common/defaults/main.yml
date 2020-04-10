@@ -1,3 +1,0 @@
----
-packages: ['git', 'htop', 'the_silver_searcher', 'curl', 'wget']
-packages_arch: ['ntp']

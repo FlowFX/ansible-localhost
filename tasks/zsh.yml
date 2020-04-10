@@ -1,0 +1,40 @@
+---
+- name: Ensure ZSH and Git are present
+  package:
+    name: ['zsh', 'git']
+    state: present
+  become: yes
+  tags: zsh
+
+- name: Set user shell to ZSH on Linux
+  user:
+    name: flowfx
+    shell: /bin/zsh
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: zsh
+
+- name: Ensure ZSH path is included in /etc/shells on macOS
+  lineinfile:
+    path: /etc/shells
+    regexp: '^\/usr\/local\/bin\/zsh'
+    line: '/usr/local/bin/zsh'
+    create: yes
+  become: yes
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: zsh
+
+- name: Set user shell to ZSH on macOS
+  user:
+    name: flowfx
+    shell: /usr/local/bin/zsh
+  become: yes
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: zsh
+
+- name: Clone OhMyZsh
+  git:
+    repo: 'https://github.com/ohmyzsh/ohmyzsh.git'
+    dest: ~/.oh-my-zsh
+    update: yes
+  tags: zsh

@@ -1,0 +1,92 @@
+# OfflineIMAP
+# https://wiki.archlinux.org/index.php/OfflineIMAP
+- name: Install offlineimap on Linux
+  package:
+    name: offlineimap
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: [ email, offlineimap ]
+
+# - name: Disable offlineimap-oneshot timer
+#   systemd:
+#     name: offlineimap-oneshot.timer
+#     scope: user
+#     enabled: no
+#     state: stopped
+#   when: ansible_facts['os_family'] != 'Darwin'
+#   tags: [ email, offlineimap ]
+
+- name: Install offlineimap on macOS
+  homebrew:
+    name: offlineimap
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: [ email, offlineimap ]
+
+# Contacts
+- package:
+    name: ['khard', 'vdirsyncer']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: [ email, contacts ]
+
+- homebrew:
+    name: ['khard', 'vdirsyncer']
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: [ email, contacts ]
+
+# Mutt
+- name: Instlal NeoMutt and helpers on Linux
+  package:
+    name: [
+      # 'gpgme',
+      'msmtp',
+      'neomutt',
+      'urlscan',
+      'w3m'
+      ]
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: [ email, mutt ]
+
+- name: Install ripmime on Debian
+  apt:
+    name: 'ripmime'
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: [ email, mutt ]
+
+- name: Install ripmime on Arch
+  aur:
+    name: 'ripmime'
+    skip_installed: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
+  tags: [ email, mutt ]
+
+- name: Install NeoMutt and helpers on macOS
+  homebrew:
+    name: [
+      # 'gpgme',
+      'msmtp',
+      'neomutt',
+      'urlscan',
+      'w3m',
+      'ripmime'
+      ]
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: [ email, mutt ]
+
+- name: Create Mail directory
+  file:
+    path: ~/Mail
+    state: directory
+  tags: [ email, mutt ]
+
+- name: Create Mutt headers cache directory
+  file:
+    path: ~/.cache/neomutt/headers
+    state: directory
+  tags: [ email, mutt ]

@@ -1,0 +1,50 @@
+---
+- name: Add apt key for Resilio sources
+  apt_key:
+    url: https://linux-packages.resilio.com/resilio-sync/key.asc
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: rslsync
+
+- name: Add Resilio Sync sources
+  apt_repository:
+    repo: deb http://linux-packages.resilio.com/resilio-sync/deb resilio-sync non-free
+    state: present
+    update_cache: yes
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: rslsync
+
+- name: Install Resilio Sync on Debian
+  apt:
+    name: resilio-sync
+    state: present
+  become: yes
+  when: ansible_os_family == 'Debian'
+  tags: rslsync
+
+- name: Install Resilio Sync on Arch
+  aur:
+    name: rslsync
+    skip_installed: yes
+  when: ansible_os_family == 'Archlinux'
+  tags: rslsync
+
+- name: Hardlink config file
+  # Softlink doesn't work with rslsync
+  file:
+    src: /home/flowfx/dotfiles-local/config/rslsync/rslsync.conf
+    dest: /home/flowfx/.config/rslsync/rslsync.conf
+    state: hard
+  tags: rslsync
+  when: ansible_os_family == 'Archlinux'
+
+- name: Enable and start rslsync-service
+  systemd:
+    name: rslsync.service
+    scope: user
+    enabled: yes
+    state: started
+  tags: rslsync
+  when: ansible_os_family == 'Archlinux'

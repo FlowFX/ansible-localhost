@@ -1,0 +1,54 @@
+---
+- name: Add non-free sources
+  apt_repository:
+    repo: deb http://ftp.de.debian.org/debian/ buster main non-free
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: [ desktop, networking ]
+
+- name: Install WiFi packages
+  apt:
+    name: ['firmware-linux-nonfree', 'wpasupplicant']
+    state: present
+  become: yes
+  tags: [ desktop, networking ]
+
+- name: Install NetworkManager on Debian
+  apt:
+    name: ['nm-tray']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: [ desktop, networking ]
+
+- name: Install NetworkManager on Arch
+  pacman:
+    name: ['nm-applet']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Arch'
+  tags: [ desktop, networking ]
+
+- name: Install Pulseaudio
+  package:
+    name: ['pulseaudio', 'pasystray']
+    state: present
+  become: yes
+  tags: [ desktop, audio ]
+
+- name: Install Bluetooth
+  package:
+    name: ['blueman']
+    state: present
+  become: yes
+  tags: [ desktop, bluetooth ]
+
+- name: Enable bluetooth.service
+  systemd:
+    name: bluetooth.service
+    scope: system
+    enabled: yes
+    state: started
+  become: yes
+  tags: [ desktop, bluetooth ]

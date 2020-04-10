@@ -1,18 +1,79 @@
 - hosts: localhost
-  roles:
-    - bootstrap
-    - common
-    - dotfiles
-    - bluetooth
-    - firewall
-    - backup
-    - calendar
-    - email
-    - powersafe
-    - development
-    - { role: X11, when: ansible_os_family != 'Darwin' }
-    - ioki
+
+  vars:
+    packages: ['git', 'htop', 'curl', 'wget', 'neovim', 'tmux', 'zsh', 'gpg']
+    packages_arch: ['the_silver_searcher']
+    packages_debian: ['silversearcher-ag']
+    x11_packages: ['xcape', 'arandr', 'autorandr', 'maim', 'xclip']
+    x11_packages_arch: ['xorg-server', 'xorg-apps', 'i3-wm']
+    x11_packages_debian: ['xorg', 'i3']
+    calendar_packages: ['todoman', 'vdirsyncer', 'pass', 'khal']
+    asdf_version: 'v0.7.8'
+    asdf_keyrings_dir: ~/.asdf/keyrings/
+
   tasks:
-    - include_tasks: rslsync.yml
+    - include_tasks: tasks/bootstrap.yml
+      tags: bootstrap
+    - include_tasks: tasks/ntp.yml
+      tags: ntp
+      when: ansible_facts['os_family'] != 'Darwin'
+    - include_tasks: tasks/packages.yml
+      tags: packages
+    - include_tasks: tasks/zsh.yml
+      tags: zsh
+    - include_tasks: tasks/dotfiles.yml
+      tags: dotfiles
+    - include_tasks: tasks/firewall.yml
+      tags: firewall
+      when: ansible_facts['os_family'] != 'Darwin'
+    - include_tasks: tasks/development.yml
+      tags: development
+    - include_tasks: tasks/powersafe.yml
+      tags: powersafe
+      when: ansible_facts['os_family'] != 'Darwin'
+
+    - name: Install encryption packages
+      package:
+        name: ['gnupg', 'gpg-agent', 'pass']
+      become: yes
+      when: ansible_facts['os_family'] != 'Darwin'
+    - name: Install encryption packages
+      homebrew:
+        name: ['gnupg', 'gpg-agent', 'pass']
+      when: ansible_facts['os_family'] == 'Darwin'
+
+    - name: Install and configure X11
+      include_tasks: tasks/x11.yml
+      tags: x11
+      when: ansible_facts['os_family'] != 'Darwin'
+
+    - name: Install Network and Bluetooth stuff
+      include_tasks: tasks/desktop.yml
+      tags: [ desktop, networking, audio, bluetooth ]
+      when: ansible_facts['os_family'] != 'Darwin'
+
+    - include_tasks: tasks/rslsync.yml
       tags: rslsync
-      when: ansible_os_family == 'Archlinux'
+      when: ansible_facts['os_family'] != 'Darwin'
+
+    - include_tasks: tasks/backup.yml
+      tags: backup
+      when: ansible_facts['os_family'] != 'Darwin'
+
+    - include_tasks: tasks/work.yml
+      tags: work
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - include_tasks: tasks/calendar.yml
+      tags: calendar
+
+    - include_tasks: tasks/email.yml
+      tags: [ email, offlineimap, contacts, mutt ]
+
+  handlers:
+    - name: run rcup
+      command: env RCRC=$HOME/dotfiles/rcrc rcup
+    - name: reread systemd configs
+      systemd:
+        daemon_reload: yes
+      become: yes

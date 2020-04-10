@@ -1,0 +1,44 @@
+- name: Install common packages on macOS
+  homebrew:
+    name: '{{ packages }}'
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: packages
+
+- name: Install common packages on Linux
+  package:
+    name: '{{ packages }}'
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: packages
+
+- name: Install packages on Debian
+  apt:
+    name: '{{ packages_debian }}'
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: packages
+
+- name: Install packages on Arch
+  pacman:
+    name: '{{ packages_arch }}'
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
+  tags: packages
+
+
+# Cleaning the package cache on Arch Linux
+# https://wiki.archlinux.org/index.php/pacman#Cleaning_the_package_cache
+- pacman:
+    name: pacman-contrib
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
+  tags: packages
+
+- name: Enable paccache.timer on Arch Linux
+  systemd:
+    name: paccache.timer
+    scope: system
+    enabled: yes
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
+  tags: packages

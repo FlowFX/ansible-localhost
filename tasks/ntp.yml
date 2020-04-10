@@ -1,0 +1,15 @@
+---
+- name: Install ntp
+  package:
+    name: ntp
+  become: yes
+  tags: ntp
+
+- name: Enable NTP Service
+  systemd:
+    name: ntp.service
+    scope: system
+    enabled: yes
+    state: started
+  become: yes
+  tags: ntp

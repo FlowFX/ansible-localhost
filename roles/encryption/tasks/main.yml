@@ -1,4 +1,0 @@
-- name: Install packages
-  package:
-    name: '{{ packages }}'
-  become: yes

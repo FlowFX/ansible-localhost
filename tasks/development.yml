@@ -1,0 +1,78 @@
+---
+# direnv is used for development at ioki
+- name: Ensure direnv is installed
+  package:
+    name: direnv
+  become: yes
+  tags: development
+
+- name: Ensure dependencies for asdf are present on Linux
+  package:
+    name: ['build-essential', 'libssl-dev', 'libreadline-dev', 'zlib1g-dev', 'gpg']
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: development
+
+- name: Ensure asdf is installed
+  git:
+    repo: 'https://github.com/asdf-vm/asdf.git'
+    dest: ~/.asdf
+    version: '{{ asdf_version }}'
+  tags: development
+
+- name: Add asdf Ruby plugin
+  shell: asdf plugin add ruby
+  args:
+    creates: ~/.asdf/plugins/ruby/
+  tags: development
+
+- name: Add asdf Python plugin
+  shell: asdf plugin add python
+  args:
+    creates: ~/.asdf/plugins/python/
+  tags: development
+
+- name: Add asdf NodeJS plugin
+  shell: asdf plugin add nodejs
+  args:
+    creates: ~/.asdf/plugins/nodejs/
+  tags: [ development, nodejs ]
+
+- file:
+    path: ~/.asdf/keyrings/nodejs
+    state: directory
+    mode: '0700'
+  tags: [ development, nodejs ]
+
+- name: Add asdf nodejs gpg keys to dedicated keyring
+  command: bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+  args:
+    creates: ~/.asdf/keyrings/nodejs/pubring.kbx
+  environment:
+    GNUPGHOME: ~/.asdf/keyrings/nodejs
+  tags: [ development, nodejs ]
+
+- name: Add asdf Yarn plugin
+  shell: asdf plugin add yarn
+  args:
+    creates: ~/.asdf/plugins/yarn/
+  tags: development
+
+- name: Add asdf tmux plugin
+  shell: asdf plugin add tmux
+  args:
+    creates: ~/.asdf/plugins/tmux/
+  tags: development
+
+
+
+# https://stackoverflow.com/a/50349235
+- name: Set low precedence for api.rubygems.org IPv6 addresses.
+  lineinfile:
+    path: /etc/gai.conf
+    regexp: '^precedence  2a04:4e42::0/32'
+    line: 'precedence  2a04:4e42::0/32  5'
+    create: yes
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: development

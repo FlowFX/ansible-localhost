@@ -1,6 +1,0 @@
----
-- name: Ensure ansible-aur plugin is up-to date
-  git:
-    repo: 'https://github.com/kewlfft/ansible-aur.git'
-    dest: ~/.ansible/plugins/modules/aur
-    update: yes

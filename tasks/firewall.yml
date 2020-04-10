@@ -1,0 +1,29 @@
+---
+- name: Ensure UFW is present
+  package:
+    name: ufw
+    state: present
+  become: yes
+  tags: firewall
+
+- name: Ensure ufw.service is enabled and started
+  systemd:
+    name: ufw.service
+    scope: system
+    enabled: yes
+    state: started
+  become: yes
+  tags: firewall
+
+- name: Deny everything and enable UFW
+  ufw:
+    state: enabled
+    policy: deny
+  become: yes
+  tags: firewall
+
+- name: Set UFW logging
+  ufw:
+    logging: 'on'
+  become: yes
+  tags: firewall

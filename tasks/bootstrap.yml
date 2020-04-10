@@ -1,0 +1,38 @@
+---
+- name: Ensure localhost is included in /etc/ansible/hosts
+  lineinfile:
+    path: /etc/ansible/hosts
+    regexp: '^localhost'
+    line: 'localhost ansible_connection=local'
+    create: yes
+  become: yes
+  tags: bootstrap
+
+- name: Ensure Git is installed on Linux
+  package:
+    name: git
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: bootstrap
+
+- name: Ensure Git is installed on macOS
+  homebrew:
+    name: git
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: bootstrap
+
+- name: Ensure ansible-localhost repository is present
+  git:
+    repo: git@github.com:flowfx/ansible-localhost.git
+    dest: ~/code/ansible-localhost
+    update: no
+  tags: bootstrap
+
+- name: Ensure ansible-aur plugin is up-to date
+  git:
+    repo: 'https://github.com/kewlfft/ansible-aur.git'
+    dest: ~/.ansible/plugins/modules/aur
+    update: yes
+  tags: bootstrap

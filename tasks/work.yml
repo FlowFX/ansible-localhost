@@ -1,0 +1,21 @@
+---
+- name: Install OneDrive sync
+  aur:
+    name: onedrive-abraunegg
+    skip_installed: yes
+
+# https://wiki.archlinux.org/index.php/Multilib#multilib
+# - name: Enable multilib repository
+#   lineinfile:
+#     path: /etc/pacman.conf
+#     regexp: '^\[multilib\]\\nInclude'
+#     line: "[multilib]\nInclude = /etc/pacman.d/mirrorlist"
+#   become: yes
+#   notify:
+#     - run pacman -Sy
+
+- name: Install Wine
+  package:
+    name: ['wine', 'wine-gecko', 'wine-mono']
+    state: present
+  become: true
