@@ -1,0 +1,18 @@
+---
+- git:
+    repo: git@github.com:flowfx/flowfx.de.git
+    dest: ~/code/flowfx.de
+    update: no
+  tags: code
+
+- git:
+    repo: git@github.com:flowfx/ansible-blackhole.git
+    dest: ~/code/ansible-blackhole
+    update: no
+  tags: code
+
+- git:
+    repo: git@github.com:flowfx/boxjumps.git
+    dest: ~/code/boxjumps
+    update: no
+  tags: code

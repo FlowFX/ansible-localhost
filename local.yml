@@ -64,6 +64,9 @@
       tags: work
       when: ansible_facts['os_family'] == 'Archlinux'
 
+    - include_tasks: tasks/code.yml
+      tags: code
+
     - include_tasks: tasks/calendar.yml
       tags: calendar
 
