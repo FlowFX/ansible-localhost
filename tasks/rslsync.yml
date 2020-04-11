@@ -38,7 +38,6 @@
     dest: /home/flowfx/.config/rslsync/rslsync.conf
     state: hard
   tags: rslsync
-  when: ansible_os_family == 'Archlinux'
 
 - name: Enable and start rslsync-service
   systemd:
@@ -47,4 +46,3 @@
     enabled: yes
     state: started
   tags: rslsync
-  when: ansible_os_family == 'Archlinux'
