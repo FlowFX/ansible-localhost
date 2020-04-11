@@ -39,10 +39,20 @@
     state: hard
   tags: rslsync
 
-- name: Enable and start rslsync-service
+- name: Enable and start resilio-sync-service on Debian
+  systemd:
+    name: resilio-sync.service
+    scope: user
+    enabled: yes
+    state: started
+  tags: rslsync
+  when: ansible_os_family == 'Debian'
+
+- name: Enable and start rslsync-service on Arch
   systemd:
     name: rslsync.service
     scope: user
     enabled: yes
     state: started
   tags: rslsync
+  when: ansible_os_family == 'Archlinux'
