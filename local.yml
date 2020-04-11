@@ -70,6 +70,14 @@
     - include_tasks: tasks/email.yml
       tags: [ email, offlineimap, contacts, mutt ]
 
+    - name: Install all those lovely applications
+      package:
+        name: ['firefox-esr']
+        state: present
+      become: yes
+      when: ansible_facts['os_family'] == 'Debian'
+      tags: [ desktop, applications ]
+
   handlers:
     - name: run rcup
       command: env RCRC=$HOME/dotfiles/rcrc rcup
