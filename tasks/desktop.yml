@@ -9,7 +9,7 @@
 
 - name: Install WiFi packages
   apt:
-    name: ['firmware-linux-nonfree', 'wpasupplicant']
+    name: ['firmware-iwlwifi', 'wpasupplicant']
     state: present
   become: yes
   tags: [ desktop, networking ]
