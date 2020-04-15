@@ -1,9 +1,10 @@
 - hosts: localhost
 
   vars:
-    packages: ['git', 'htop', 'curl', 'wget', 'neovim', 'tmux', 'zsh', 'gpg']
-    packages_arch: ['the_silver_searcher']
-    packages_debian: ['silversearcher-ag']
+    packages: ['git', 'htop', 'curl', 'wget', 'neovim', 'tmux', 'zsh']
+    packages_arch: ['gnupg', 'the_silver_searcher']
+    packages_debian: ['gpg', 'silversearcher-ag']
+    packages_macos: ['gpg']
     x11_packages: ['xcape', 'arandr', 'autorandr', 'maim', 'xclip']
     x11_packages_arch: ['xorg-server', 'xorg-apps', 'i3-wm']
     x11_packages_debian: ['xorg', 'i3']
@@ -34,9 +35,10 @@
 
     - name: Install encryption packages
       package:
-        name: ['gnupg', 'gpg-agent', 'pass']
+        name: ['gnupg', 'pass']
       become: yes
       when: ansible_facts['os_family'] != 'Darwin'
+
     - name: Install encryption packages
       homebrew:
         name: ['gnupg', 'pass']
