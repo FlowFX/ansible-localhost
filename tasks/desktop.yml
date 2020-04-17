@@ -7,11 +7,12 @@
   when: ansible_facts['os_family'] == 'Debian'
   tags: [ desktop, networking ]
 
-- name: Install WiFi packages
+- name: Install WiFi packages on Debian
   apt:
     name: ['firmware-iwlwifi', 'wpasupplicant']
     state: present
   become: yes
+  when: ansible_facts['os_family'] == 'Debian'
   tags: [ desktop, networking ]
 
 - name: Install NetworkManager on Debian

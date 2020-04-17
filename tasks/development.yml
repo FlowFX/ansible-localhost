@@ -14,11 +14,18 @@
   when: ansible_facts['os_family'] == 'Darwin'
   tags: development
 
-- name: Ensure dependencies for asdf are present on Linux
+- name: Ensure dependencies for asdf are present on Debian
   package:
     name: ['build-essential', 'libssl-dev', 'libreadline-dev', 'zlib1g-dev', 'gpg']
   become: yes
-  when: ansible_facts['os_family'] != 'Darwin'
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: development
+
+- name: Ensure dependencies for asdf are present on Arch (uncomplete)
+  package:
+    name: ['readline']
+  become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
   tags: development
 
 - name: Ensure asdf is installed
