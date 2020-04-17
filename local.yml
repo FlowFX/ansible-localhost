@@ -54,6 +54,10 @@
       tags: [ desktop, networking, audio, bluetooth ]
       when: ansible_facts['os_family'] != 'Darwin'
 
+    - name: Install fonts
+      include_tasks: tasks/fonts.yml
+      tags: fonts
+
     - include_tasks: tasks/rslsync.yml
       tags: rslsync
       when: ansible_facts['os_family'] != 'Darwin'

@@ -22,19 +22,6 @@
   become: yes
   tags: x11
 
-- name: Install fonts from AUR
-  aur:
-    name: [
-      'ttf-google-fonts-git',
-      'noto-fonts',
-      'noto-fonts-extra',
-      'noto-fonts-emoji',
-      'jetbrains-mono'
-      ]
-    skip_installed: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: x11
-
 - file:
     path: /etc/X11/xorg.conf.d
     state: directory
