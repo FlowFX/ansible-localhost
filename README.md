@@ -39,3 +39,6 @@ asdf install ruby 2.8.x
 asdf install python 3.8.x
 asdf install nodejs ..
 asdf install yarn ..
+
+
+Activate firefox sync
