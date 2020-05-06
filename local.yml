@@ -28,7 +28,7 @@
       tags: firewall
       when: ansible_facts['os_family'] != 'Darwin'
     - include_tasks: tasks/development.yml
-      tags: development
+      tags: [ development, docker, postgresql ]
     - include_tasks: tasks/powersafe.yml
       tags: powersafe
       when: ansible_facts['os_family'] != 'Darwin'

@@ -91,3 +91,34 @@
   become: yes
   when: ansible_facts['os_family'] != 'Darwin'
   tags: development
+
+
+# POSTGRESQL
+- name: Install dependencies for running a PostgreSQL docker image
+  package:
+    name: ['docker', 'postgresql', 'pgadmin4']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: [ development, docker, postgresql ]
+
+# This stores all docker images on the home partition, which is usually much
+# larger.
+- name: Copy Docker settings
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+  tags: [ development, docker, postgresql ]
+
+- name: Enable docker.service
+  systemd:
+    name: docker.service
+    scope: system
+    enabled: yes
+    state: started
+  become: yes
+  tags: [ development, docker, postgresql ]
