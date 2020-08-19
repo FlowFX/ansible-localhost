@@ -43,12 +43,26 @@ $ ansible-playbook --tags bootstrap local.yml
 
 ## Go from there
 
+Run the complete playbook.
+
+```
 $ ansible-playbook local.yml
+```
+
+Install asdf. 
+
+```
+$ asdf update
+$ asdf plugin add nodejs
+$ asdf plugin add yarn
+$ asdf plugin add ruby
+```
+
+etc. pp...
 
 
-## asdf
+Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11-on-ubuntu-linux/
 
-asdf install ruby 2.8.x
-asdf install python 3.8.x
-asdf install nodejs ..
-asdf install yarn ..
+```
+$ sudo apt install postgresql-11-postgis-2.5
+```

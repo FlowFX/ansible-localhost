@@ -19,3 +19,11 @@
     skip_installed: no
   when: ansible_facts['os_family'] == 'Archlinux'
   tags: fonts
+
+- name: Install fonts on Ubuntu/Debian
+  apt:
+    name: ['fonts-inconsolata']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: fonts

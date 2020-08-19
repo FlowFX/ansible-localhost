@@ -8,6 +8,14 @@
   when: ansible_facts['os_family'] != 'Darwin'
   tags: development
 
+- name: Ensure libpq is installed on Ubuntu - dependency for pg gem
+  apt:
+    name: libpq-dev
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: development
+
 - name: Ensure direnv is installed on macOS
   homebrew:
     name: direnv
@@ -32,26 +40,29 @@
   git:
     repo: 'https://github.com/asdf-vm/asdf.git'
     dest: ~/.asdf
-    version: '{{ asdf_version }}'
   tags: development
+  notify:
+    - run asdf update
 
-- name: Add asdf Ruby plugin
-  shell: asdf plugin add ruby
-  args:
-    creates: ~/.asdf/plugins/ruby/
-  tags: development
+# - name: Add asdf Ruby plugin
+#   shell: asdf plugin add ruby
+#   args:
+#     creates: ~/.asdf/plugins/ruby/
+#   tags: development
 
-- name: Add asdf Python plugin
-  shell: asdf plugin add python
-  args:
-    creates: ~/.asdf/plugins/python/
-  tags: development
+  # NOTE: This somehow breaks the Ansible installation on Ubuntu
+  #
+  # - name: Add asdf Python plugin
+  #   shell: asdf plugin add python
+  #   args:
+  #     creates: ~/.asdf/plugins/python/
+  #   tags: development
 
-- name: Add asdf NodeJS plugin
-  shell: asdf plugin add nodejs
-  args:
-    creates: ~/.asdf/plugins/nodejs/
-  tags: [ development, nodejs ]
+# - name: Add asdf NodeJS plugin
+#   shell: asdf plugin add nodejs
+#   args:
+#     creates: ~/.asdf/plugins/nodejs/
+#   tags: [ development, nodejs ]
 
 - file:
     path: ~/.asdf/keyrings/nodejs
@@ -62,24 +73,17 @@
 - name: Add asdf nodejs gpg keys to dedicated keyring
   command: bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
   args:
-    creates: ~/.asdf/keyrings/nodejs/pubring.kbx
+    # creates: ~/.asdf/keyrings/nodejs/pubring.kbx
+    creates: ~/.asdf/keyrings/nodejs/asdf-nodejs.gpg
   environment:
     GNUPGHOME: ~/.asdf/keyrings/nodejs
   tags: [ development, nodejs ]
 
-- name: Add asdf Yarn plugin
-  shell: asdf plugin add yarn
-  args:
-    creates: ~/.asdf/plugins/yarn/
-  tags: development
-
-- name: Add asdf tmux plugin
-  shell: asdf plugin add tmux
-  args:
-    creates: ~/.asdf/plugins/tmux/
-  tags: development
-
-
+# - name: Add asdf Yarn plugin
+#   shell: asdf plugin add yarn
+#   args:
+#     creates: ~/.asdf/plugins/yarn/
+#   tags: development
 
 # https://stackoverflow.com/a/50349235
 - name: Set low precedence for api.rubygems.org IPv6 addresses.
@@ -99,7 +103,7 @@
     name: ['docker', 'postgresql', 'pgadmin4']
     state: present
   become: yes
-  when: ansible_facts['os_family'] != 'Darwin'
+  when: ansible_facts['os_family'] == 'Archlinux'
   tags: [ development, docker, postgresql ]
 
 # This stores all docker images on the home partition, which is usually much
@@ -122,5 +126,5 @@
     enabled: yes
     state: started
   become: yes
-  when: ansible_facts['os_family'] != 'Archlinux'
+  when: ansible_facts['os_family'] == 'Archlinux'
   tags: [ development, docker, postgresql ]

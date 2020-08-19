@@ -39,7 +39,16 @@
     state: hard
   tags: rslsync
 
-- name: Enable and start resilio-sync-service on Debian
+- name: Disable system resilio-sync-service on Debian
+  systemd:
+    name: resilio-sync.service
+    scope: system
+    enabled: no
+    state: stopped
+  tags: rslsync
+  when: ansible_os_family == 'Debian'
+
+- name: Enable and start resilio-sync-service on Debian in user space
   systemd:
     name: resilio-sync.service
     scope: user
