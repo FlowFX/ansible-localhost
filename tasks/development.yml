@@ -40,6 +40,7 @@
   git:
     repo: 'https://github.com/asdf-vm/asdf.git'
     dest: ~/.asdf
+    update: no
   tags: development
   notify:
     - run asdf update
