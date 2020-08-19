@@ -112,6 +112,7 @@
     group: root
     mode: '0644'
   become: yes
+  when: ansible_facts['os_family'] == 'Archlinux'
   tags: [ development, docker, postgresql ]
 
 - name: Enable docker.service
@@ -121,4 +122,5 @@
     enabled: yes
     state: started
   become: yes
+  when: ansible_facts['os_family'] != 'Archlinux'
   tags: [ development, docker, postgresql ]
