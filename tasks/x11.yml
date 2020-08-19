@@ -28,7 +28,27 @@
   become: yes
   tags: x11
 
-- name: Copy X11 keyboard settings
+- name: Configure keyboard for Ubuntu (1/2)
+  lineinfile:
+    path: /etc/default/keyboard
+    regexp: '^XKBLAYOUT='
+    line: 'XKBLAYOUT=eu'
+    create: yes
+  become: yes
+  when: ansible_distribution == 'Ubuntu'
+  tags: x11
+
+- name: Configure keyboard for Ubuntu (2/2)
+  lineinfile:
+    path: /etc/default/keyboard
+    regexp: '^XKBOPTIONS='
+    line: 'XKBOPTIONS="caps:ctrl_modifier'
+    create: yes
+  become: yes
+  when: ansible_distribution == 'Ubuntu'
+  tags: x11
+
+- name: Configure X11 keyboard settings for Arch & Debian
   copy:
     src: 00-keyboard.conf
     dest: /etc/X11/xorg.conf.d/00-keyboard.conf
@@ -36,6 +56,7 @@
     group: root
     mode: '0644'
   become: yes
+  when: ansible_distribution != 'Ubuntu'
   tags: x11
 
 - name: Copy X11 monitor settings
@@ -46,4 +67,5 @@
     group: root
     mode: '0644'
   become: yes
+  when: ansible_distribution != 'Ubuntu'
   tags: x11

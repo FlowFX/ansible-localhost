@@ -1,9 +1,9 @@
 - hosts: localhost
 
   vars:
-    packages: ['git', 'htop', 'curl', 'wget', 'neovim', 'tmux', 'zsh']
+    packages: ['git', 'curl', 'wget', 'neovim', 'tmux', 'zsh']
     packages_arch: ['gnupg', 'the_silver_searcher']
-    packages_debian: ['gpg', 'silversearcher-ag']
+    packages_debian: ['gpg', 'silversearcher-ag', 'direnv']
     packages_macos: ['gpg']
     x11_packages: ['xcape', 'arandr', 'autorandr', 'maim', 'xclip']
     x11_packages_arch: ['xorg-server', 'xorg-apps', 'i3-wm']
@@ -15,85 +15,84 @@
   tasks:
     - include_tasks: tasks/bootstrap.yml
       tags: bootstrap
-    - include_tasks: tasks/ntp.yml
-      tags: ntp
-      when: ansible_facts['os_family'] != 'Darwin'
     - include_tasks: tasks/packages.yml
       tags: packages
     - include_tasks: tasks/zsh.yml
       tags: zsh
     - include_tasks: tasks/dotfiles.yml
       tags: dotfiles
+
     - include_tasks: tasks/firewall.yml
       tags: firewall
       when: ansible_facts['os_family'] != 'Darwin'
-    - include_tasks: tasks/development.yml
-      tags: [ development, docker, postgresql ]
-    - include_tasks: tasks/powersafe.yml
-      tags: powersafe
-      when: ansible_facts['os_family'] != 'Darwin'
-
-    - name: Install encryption packages
-      package:
-        name: ['gnupg', 'pass']
-      become: yes
-      when: ansible_facts['os_family'] != 'Darwin'
-
-    - name: Install encryption packages
-      homebrew:
-        name: ['gnupg', 'pass']
-      when: ansible_facts['os_family'] == 'Darwin'
 
     - name: Install and configure X11
       include_tasks: tasks/x11.yml
       tags: x11
       when: ansible_facts['os_family'] != 'Darwin'
+ 
+    # - include_tasks: tasks/development.yml
+    #   tags: [ development, docker, postgresql ]
+    # - include_tasks: tasks/powersafe.yml
+    #   tags: powersafe
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
-    - name: Install Network and Bluetooth stuff
-      include_tasks: tasks/desktop.yml
-      tags: [ desktop, networking, audio, bluetooth ]
-      when: ansible_facts['os_family'] != 'Darwin'
+    # - name: Install encryption packages
+    #   package:
+    #     name: ['gnupg', 'pass']
+    #   become: yes
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
-    - name: Install fonts
-      include_tasks: tasks/fonts.yml
-      tags: fonts
+    # - name: Install encryption packages
+    #   homebrew:
+    #     name: ['gnupg', 'pass']
+    #   when: ansible_facts['os_family'] == 'Darwin'
 
-    - include_tasks: tasks/rslsync.yml
-      tags: rslsync
-      when: ansible_facts['os_family'] != 'Darwin'
+    # - name: Install Network and Bluetooth stuff
+    #   include_tasks: tasks/desktop.yml
+    #   tags: [ desktop, networking, audio, bluetooth ]
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
-    - include_tasks: tasks/backup.yml
-      tags: backup
-      when: ansible_facts['os_family'] != 'Darwin'
+    # - name: Install fonts
+    #   include_tasks: tasks/fonts.yml
+    #   tags: fonts
 
-    - include_tasks: tasks/work.yml
-      tags: work
-      when: ansible_facts['os_family'] == 'Archlinux'
+    # - include_tasks: tasks/rslsync.yml
+    #   tags: rslsync
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
-    - include_tasks: tasks/code.yml
-      tags: code
+    # - include_tasks: tasks/backup.yml
+    #   tags: backup
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
-    - include_tasks: tasks/calendar.yml
-      tags: calendar
+    # - include_tasks: tasks/work.yml
+    #   tags: work
+    #   when: ansible_facts['os_family'] == 'Archlinux'
 
-    - include_tasks: tasks/email.yml
-      tags: [ email, offlineimap, contacts, mutt ]
+    # - include_tasks: tasks/code.yml
+    #   tags: code
 
-    - name: Install all those lovely applications
-      package:
-        name: ['mplayer', 'vlc', 'anki']
-        state: present
-      become: yes
-      when: ansible_facts['os_family'] != 'Darwin'
-      tags: [ desktop, applications ]
+    # - include_tasks: tasks/calendar.yml
+    #   tags: calendar
 
-    - name: Install all those lovely applications on Debian
-      apt:
-        name: ['firefox-esr']
-        state: present
-      become: yes
-      when: ansible_facts['os_family'] == 'Debian'
-      tags: [ desktop, applications ]
+    # - include_tasks: tasks/email.yml
+    #   tags: [ email, offlineimap, contacts, mutt ]
+
+    # - name: Install all those lovely applications
+    #   package:
+    #     name: ['mplayer', 'vlc', 'anki']
+    #     state: present
+    #   become: yes
+    #   when: ansible_facts['os_family'] != 'Darwin'
+    #   tags: [ desktop, applications ]
+
+    # - name: Install all those lovely applications on Debian
+    #   apt:
+    #     name: ['firefox-esr']
+    #     state: present
+    #   become: yes
+    #   when: ansible_facts['os_family'] == 'Debian'
+    #   tags: [ desktop, applications ]
 
   handlers:
     - name: run rcup
