@@ -65,4 +65,21 @@ Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11
 
 ```
 $ sudo apt install postgresql-11-postgis-2.5
+$ sudo apt install redis
 ```
+
+
+## More work foo
+
+
+Install MS Teams
+
+https://docs.microsoft.com/de-de/microsoftteams/get-clients#install-manually-from-the-command-line
+
+
+Install fonts
+
+
+https://gist.github.com/matthewjberger/7dd7e079f282f8138a9dc3b045ebefa0
+
+https://www.nerdfonts.com/font-downloads
