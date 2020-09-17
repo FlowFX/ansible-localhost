@@ -71,6 +71,10 @@ $ sudo apt install redis
 
 ## More work foo
 
+$ sudo apt install libcurl4-openssl-dev
+
+required for `curb`
+
 
 Install MS Teams
 
@@ -83,3 +87,12 @@ Install fonts
 https://gist.github.com/matthewjberger/7dd7e079f282f8138a9dc3b045ebefa0
 
 https://www.nerdfonts.com/font-downloads
+
+
+Re-instll vim-plug?
+
+https://github.com/junegunn/vim-plug#unix-linux
+
+install imagemagick!
+
+install thefuck
