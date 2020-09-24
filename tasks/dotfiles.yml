@@ -30,7 +30,7 @@
 
 - name: Clone dotfiles-local
   git:
-    repo: 'git@github.com:FlowFX/dotfiles.git'
+    repo: 'git@codeberg.org:flowfx/dotfiles.git'
     dest: ~/dotfiles-local
     update: no
   notify:
