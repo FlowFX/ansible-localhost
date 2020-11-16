@@ -49,7 +49,7 @@ Run the complete playbook.
 $ ansible-playbook local.yml
 ```
 
-Install asdf. 
+Install asdf.
 
 ```
 $ asdf update
@@ -76,6 +76,9 @@ $ sudo apt install libcurl4-openssl-dev
 required for `curb`
 
 
+apt install brightnessctl
+
+
 Install MS Teams
 
 https://docs.microsoft.com/de-de/microsoftteams/get-clients#install-manually-from-the-command-line
@@ -96,3 +99,9 @@ https://github.com/junegunn/vim-plug#unix-linux
 install imagemagick!
 
 install thefuck
+
+install ctags !!
+
+
+$ ansible-galaxy collection install ansible.posix
+$ ansible-galaxy collection install community.general.
