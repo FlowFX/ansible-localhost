@@ -66,9 +66,9 @@
     #   tags: backup
     #   when: ansible_facts['os_family'] != 'Darwin'
 
-    # - include_tasks: tasks/work.yml
-    #   tags: work
-    #   when: ansible_facts['os_family'] == 'Archlinux'
+    - include_tasks: tasks/onedrive.yml
+      tags: onedrive
+      when: ansible_facts['os_family'] != 'Darwin'
 
     - include_tasks: tasks/code.yml
       tags: code
