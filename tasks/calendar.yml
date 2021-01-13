@@ -6,11 +6,11 @@
   when: ansible_facts['os_family'] != 'Darwin'
   tags: calendar
 
-- homebrew:
-    name: '{{ packages }}'
-    state: present
-  when: ansible_facts['os_family'] == 'Darwin'
-  tags: calendar
+# - homebrew:
+#     name: '{{ packages }}'
+#     state: present
+#   when: ansible_facts['os_family'] == 'Darwin'
+#   tags: calendar
 
 - name: Enable vdirsyncer timer
   systemd:
@@ -19,4 +19,3 @@
     enabled: yes
   when: ansible_facts['os_family'] != 'Darwin'
   tags: calendar
-
