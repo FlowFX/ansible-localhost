@@ -1,0 +1,32 @@
+---
+- name: Add OneDrive PPA
+  apt_repository:
+    repo: ppa:yann1ck/onedrive
+    state: present
+  become: yes
+  tags: onedrive
+  register: aptstatus
+
+- name: apt update if necessary
+  apt:
+    update_cache: yes
+  when: aptstatus.changed == True
+  become: yes
+  tags: onedrive
+
+- name: Install OneDrive sync
+  apt:
+    name: onedrive
+    state: present
+  become: yes
+  tags: onedrive
+
+- name: Enable OneDrive as a User service
+  # https://github.com/abraunegg/onedrive/blob/master/docs/USAGE.md
+  systemd:
+    name: onedrive@flowfx.service
+    scope: system
+    enabled: yes
+    state: started
+  become: yes
+  tags: onedrive
