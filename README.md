@@ -106,3 +106,7 @@ install ctags !!
 $ ansible-galaxy collection install ansible.posix
 $ ansible-galaxy collection install community.general.
 $ brew install ranger file chardet
+
+
+For flowfx.de / nikola
+apt installl yui-compressor
