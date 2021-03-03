@@ -1,0 +1,26 @@
+---
+# https://docs.brew.sh/Homebrew-on-Linux#alternative-installation
+
+- name: Ensure homebrew repository is present
+  git:
+    repo: https://github.com/Homebrew/brew.git
+    dest: ~/.linuxbrew/Homebrew
+    update: no
+  tags: homebrew
+  when: ansible_facts['os_family'] != 'Darwin'
+
+# - file:
+#     path: ~/.linuxbrew/bin
+#     state: directory
+#     mode: '0755'
+#   tags: homebrew
+
+# - file:
+#     src: ~/.linuxbrew/Homebrew/bin/brew
+#     dest: ~/.linuxbrew/bin
+#     state: link
+#   tags: homebrew
+
+# - name: eval brew env
+#   ansible.builtin.command: eval $(~/.linuxbrew/bin/brew shellenv)
+#   tags: homebrew

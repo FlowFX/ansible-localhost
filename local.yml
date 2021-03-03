@@ -76,6 +76,9 @@
     - include_tasks: tasks/calendar.yml
       tags: calendar
 
+    - include_tasks: tasks/homebrew.yml
+      tags: homebrew
+
     # - include_tasks: tasks/email.yml
     #   tags: [ email, offlineimap, contacts, mutt ]
 
