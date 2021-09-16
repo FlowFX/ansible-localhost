@@ -7,18 +7,21 @@
   when: ansible_facts['os_family'] == 'Archlinux'
   tags: fonts
 
-- name: Install fonts from AUR
-  aur:
-    name: [
-      'ttf-google-fonts-git',
-      'noto-fonts',
-      'noto-fonts-extra',
-      'noto-fonts-emoji',
-      'jetbrains-mono'
-      ]
-    skip_installed: no
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: fonts
+# The "when" clause does not appear to be honored before it looks for the "aur"
+# module
+#
+# - name: Install fonts from AUR
+#   aur:
+#     name: [
+#       'ttf-google-fonts-git',
+#       'noto-fonts',
+#       'noto-fonts-extra',
+#       'noto-fonts-emoji',
+#       'jetbrains-mono'
+#       ]
+#     skip_installed: no
+#   when: ansible_facts['os_family'] == 'Archlinux'
+#   tags: fonts
 
 - name: Install fonts on Ubuntu/Debian
   apt:
