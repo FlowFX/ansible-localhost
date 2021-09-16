@@ -1,4 +1,12 @@
 ---
+
+- package:
+    name: ['borgbackup', 'pass']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Archlinux'
+  tags: backup
+
 - package:
     name: ['borg', 'pass']
     state: present
@@ -6,10 +14,10 @@
   when: ansible_facts['os_family'] == 'Archlinux'
   tags: backup
 
-- name: Enable borgbackup timer
-  systemd:
-    name: borgbackup.timer
-    scope: user
-    enabled: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: backup
+# - name: Enable borgbackup timer
+#   systemd:
+#     name: borgbackup.timer
+#     scope: user
+#     enabled: yes
+#   when: ansible_facts['os_family'] == 'Archlinux'
+#   tags: backup

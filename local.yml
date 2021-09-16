@@ -62,9 +62,9 @@
       tags: rslsync
       when: ansible_facts['os_family'] != 'Darwin'
 
-    # - include_tasks: tasks/backup.yml
-    #   tags: backup
-    #   when: ansible_facts['os_family'] != 'Darwin'
+    - include_tasks: tasks/backup.yml
+      tags: backup
+      when: ansible_facts['os_family'] != 'Darwin'
 
     - include_tasks: tasks/onedrive.yml
       tags: onedrive
