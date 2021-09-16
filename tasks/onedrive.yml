@@ -1,4 +1,7 @@
 ---
+# Configuration and Usage of the OneDrive Free Client
+# https://github.com/abraunegg/onedrive/blob/master/docs/USAGE.md
+
 - name: Add OneDrive PPA
   apt_repository:
     repo: ppa:yann1ck/onedrive
@@ -21,21 +24,19 @@
   become: yes
   tags: onedrive
 
-- name: Enable OneDrive as a system service
-  # https://github.com/abraunegg/onedrive/blob/master/docs/USAGE.md
+- name: Disable and stop OneDrive as a system service
   systemd:
     name: onedrive@flowfx.service
     scope: system
-    enabled: yes
-    state: started
+    enabled: no
+    state: stopped
   become: yes
   tags: onedrive
 
-- name: Disable OneDrive as a user service
-  # https://github.com/abraunegg/onedrive/blob/master/docs/USAGE.md
+- name: Enable and start OneDrive as a user service
   systemd:
     name: onedrive.service
     scope: user
-    enabled: no
-    state: stopped
+    enabled: yes
+    state: started
   tags: onedrive
