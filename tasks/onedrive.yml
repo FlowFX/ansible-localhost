@@ -21,7 +21,7 @@
   become: yes
   tags: onedrive
 
-- name: Enable OneDrive as a User service
+- name: Enable OneDrive as a system service
   # https://github.com/abraunegg/onedrive/blob/master/docs/USAGE.md
   systemd:
     name: onedrive@flowfx.service
@@ -29,4 +29,13 @@
     enabled: yes
     state: started
   become: yes
+  tags: onedrive
+
+- name: Disable OneDrive as a user service
+  # https://github.com/abraunegg/onedrive/blob/master/docs/USAGE.md
+  systemd:
+    name: onedrive.service
+    scope: user
+    enabled: no
+    state: stopped
   tags: onedrive
