@@ -40,7 +40,6 @@ $ cd ~/code/ansible-localhost
 $ ansible-playbook --tags bootstrap local.yml
 ```
 
-
 ## Go from there
 
 Run the complete playbook.
@@ -60,7 +59,6 @@ $ asdf plugin add ruby
 
 etc. pp...
 
-
 Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11-on-ubuntu-linux/
 
 ```
@@ -68,29 +66,23 @@ $ sudo apt install postgresql-11-postgis-2.5
 $ sudo apt install redis
 ```
 
-
 ## More work foo
 
 $ sudo apt install libcurl4-openssl-dev
 
 required for `curb`
 
-
 apt install brightnessctl
-
 
 Install MS Teams
 
 https://docs.microsoft.com/de-de/microsoftteams/get-clients#install-manually-from-the-command-line
 
-
 Install fonts
-
 
 https://gist.github.com/matthewjberger/7dd7e079f282f8138a9dc3b045ebefa0
 
 https://www.nerdfonts.com/font-downloads
-
 
 Re-instll vim-plug?
 
@@ -102,11 +94,13 @@ install thefuck
 
 install ctags !!
 
-
 $ ansible-galaxy collection install ansible.posix
 $ ansible-galaxy collection install community.general.
 $ brew install ranger file chardet
 
+For flowfx.de / Nikola
+apt install yui-compressor
 
-For flowfx.de / nikola
-apt installl yui-compressor
+# Misc
+
+$ apt install inotify-tools
