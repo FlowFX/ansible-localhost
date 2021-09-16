@@ -8,6 +8,13 @@
   when: ansible_facts['os_family'] != 'Darwin'
   tags: development
 
+- name: Add Neovim PPA
+  apt_repository:
+    repo: ppa:neovim-ppa/unstable
+    state: present
+  become: yes
+  tags: ['development', 'vim']
+
 - name: Ensure libpq is installed on Ubuntu - dependency for pg gem
   apt:
     name: libpq-dev
