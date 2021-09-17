@@ -1,12 +1,12 @@
 ---
 - git:
     repo: git@github.com:flowfx/flowfx.de.git
-    dest: ~/code/flowfx.de
+    dest: ~/src/flowfx/flowfx.de
     update: no
   tags: code
 
 - git:
     repo: git@github.com:flowfx/boxjumps.git
-    dest: ~/code/boxjumps
+    dest: ~/src/flowfx/boxjumps
     update: no
   tags: code

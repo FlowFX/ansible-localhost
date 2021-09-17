@@ -27,8 +27,8 @@ $ ssh-keygen -o -a 100 -t ed25519 -C "flowfx@hostname"
 Clone the repository.
 
 ```
-$ mkdir ~/code
-$ git clone git@github.com:FlowFX/ansible-localhost.git ~/code/ansible-localhost
+$ mkdir ~/src/flowfx
+$ git clone git@github.com:FlowFX/ansible-localhost.git ~/src/flowfx/ansible-localhost
 ```
 
 ## Cautiously run the bootstrap task
@@ -36,7 +36,7 @@ $ git clone git@github.com:FlowFX/ansible-localhost.git ~/code/ansible-localhost
 ```
 $ echo 'localhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts
 
-$ cd ~/code/ansible-localhost
+$ cd ~/src/flowfx/ansible-localhost
 $ ansible-playbook --tags bootstrap local.yml
 ```
 

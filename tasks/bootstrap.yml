@@ -37,7 +37,7 @@
 - name: Ensure ansible-localhost repository is present
   git:
     repo: git@github.com:flowfx/ansible-localhost.git
-    dest: ~/code/ansible-localhost
+    dest: ~/src/flowfx/ansible-localhost
     update: no
   tags: bootstrap
 
