@@ -2,11 +2,9 @@
 
   vars:
     packages: ['git', 'curl', 'wget', 'neovim', 'tmux', 'zsh', 'bzip2', 'sqlite3']
-    packages_arch: ['gnupg', 'the_silver_searcher']
     packages_debian: ['gpg', 'silversearcher-ag', 'direnv']
     packages_macos: ['gpg']
     x11_packages: ['xcape', 'arandr', 'autorandr', 'maim', 'xclip']
-    x11_packages_arch: ['xorg-server', 'xorg-apps', 'i3-wm']
     x11_packages_debian: ['xorg', 'i3']
     calendar_packages: ['todoman', 'vdirsyncer', 'pass', 'khal']
     asdf_version: 'v0.7.8'
@@ -48,11 +46,6 @@
       homebrew:
         name: ['gnupg', 'pass']
       when: ansible_facts['os_family'] == 'Darwin'
-
-    - name: Install Network and Bluetooth stuff
-      include_tasks: tasks/desktop.yml
-      tags: [ desktop, networking, audio, bluetooth ]
-      when: ansible_facts['os_family'] == 'Archlinux'
 
     - name: Install fonts
       include_tasks: tasks/fonts.yml

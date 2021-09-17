@@ -7,14 +7,6 @@
   when: ansible_facts['os_family'] == 'Debian'
   tags: x11
 
-- name: Install Xorg, i3 on Arch
-  pacman:
-    name: '{{ x11_packages_arch }}'
-    state: present
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: x11
-
 - name: Install Xorg utilities
   package:
     name: '{{ x11_packages }}'
