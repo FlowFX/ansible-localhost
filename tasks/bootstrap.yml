@@ -40,10 +40,3 @@
     dest: ~/src/flowfx/ansible-localhost
     update: no
   tags: bootstrap
-
-- name: Ensure ansible-aur plugin is up-to date
-  git:
-    repo: 'https://github.com/kewlfft/ansible-aur.git'
-    dest: ~/.ansible/plugins/modules/aur
-    update: yes
-  tags: bootstrap

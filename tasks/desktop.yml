@@ -38,13 +38,6 @@
   become: yes
   tags: [ desktop, audio ]
 
-- name: Install Pulseaudio-ctl
-  aur:
-    name: pulseaudio-ctl
-    skip_installed: yes
-  when: ansible_os_family == 'Archlinux'
-  tags: [ desktop, audio ]
-
 - name: Install Bluetooth
   package:
     name: ['blueman']

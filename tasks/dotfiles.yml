@@ -6,16 +6,6 @@
   when: ansible_os_family == 'Debian'
   tags: dotfiles
 
-# The "when" clause does not appear to be honored before it looks for the "aur"
-# module
-#
-# - name: Ensure RCM is installed on Arch
-#   aur:
-#     name: rcm
-#     skip_installed: yes
-#   when: ansible_os_family == 'Archlinux'
-#   tags: dotfiles
-
 - name: Ensure RCM is installed on macOS
   homebrew_tap:
     name: thoughtbot/formulae

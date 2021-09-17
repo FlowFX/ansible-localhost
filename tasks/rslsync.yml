@@ -24,13 +24,6 @@
   when: ansible_os_family == 'Debian'
   tags: rslsync
 
-# - name: Install Resilio Sync on Arch
-#   aur:
-#     name: rslsync
-#     skip_installed: yes
-#   when: ansible_os_family == 'Archlinux'
-#   tags: rslsync
-
 - name: Hardlink config file
   # Softlink doesn't work with rslsync
   file:

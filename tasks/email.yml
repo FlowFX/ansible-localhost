@@ -59,13 +59,6 @@
   when: ansible_facts['os_family'] == 'Debian'
   tags: [ email, mutt ]
 
-- name: Install ripmime on Arch
-  aur:
-    name: 'ripmime'
-    skip_installed: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: [ email, mutt ]
-
 - name: Install NeoMutt and helpers on macOS
   homebrew:
     name: [
