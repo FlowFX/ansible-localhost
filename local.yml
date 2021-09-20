@@ -51,6 +51,10 @@
       include_tasks: tasks/fonts.yml
       tags: fonts
 
+    - name: Install Syncthing
+      include_tasks: tasks/syncthing.yml
+      tags: syncthing
+
     - include_tasks: tasks/rslsync.yml
       tags: rslsync
       when: ansible_facts['os_family'] != 'Darwin'
