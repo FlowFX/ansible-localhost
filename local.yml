@@ -1,9 +1,9 @@
 - hosts: localhost
 
   vars:
-    packages: ['git', 'curl', 'wget', 'neovim', 'tmux', 'zsh', 'bzip2', 'sqlite3']
-    packages_debian: ['gpg', 'silversearcher-ag', 'direnv']
-    packages_macos: ['gpg']
+    packages: ['curl', 'direnv', 'git', 'gpg', 'wget', 'neovim', 'tmux', 'zsh', 'bzip2', 'sqlite3']
+    packages_debian: ['silversearcher-ag']
+    packages_macos:  ['the_silver_searcher']
     x11_packages: ['xcape', 'arandr', 'autorandr', 'maim', 'xclip']
     x11_packages_debian: ['xorg', 'i3']
     calendar_packages: ['todoman', 'vdirsyncer', 'pass', 'khal']

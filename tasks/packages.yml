@@ -18,33 +18,8 @@
   when: ansible_facts['os_family'] == 'Debian'
   tags: packages
 
-- name: Install specific packages on Arch
-  pacman:
-    name: '{{ packages_arch }}'
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: packages
-
 - name: Install specific packages on macOS
   homebrew:
     name: '{{ packages_macos }}'
   when: ansible_facts['os_family'] == 'Darwin'
-  tags: packages
-
-
-# Cleaning the package cache on Arch Linux
-# https://wiki.archlinux.org/index.php/pacman#Cleaning_the_package_cache
-- pacman:
-    name: pacman-contrib
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: packages
-
-- name: Enable paccache.timer on Arch Linux
-  systemd:
-    name: paccache.timer
-    scope: system
-    enabled: yes
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
   tags: packages
