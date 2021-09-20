@@ -1,15 +1,24 @@
 ---
-- name: Install Syncthing on Linux
-  package:
-    name: ['syncthing']
-    state: present
-  become: yes
-  when: ansible_facts['os_family'] != 'Darwin'
-  tags: syncthing
-
 - name: Install Syncthing on macOS
   community.general.homebrew:
     name: ['syncthing', 'qsyncthingtray']
     state: present
   when: ansible_facts['os_family'] == 'Darwin'
+  tags: syncthing
+
+- name: Install Syncthing on Linux
+  package:
+    name: ['syncthing', 'syncthing-gtk']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: syncthing
+
+- name: Enable Syncthing user service
+  systemd:
+    name: syncthing.service
+    scope: user
+    enabled: yes
+    state: started
+  when: ansible_facts['os_family'] != 'Darwin'
   tags: syncthing
