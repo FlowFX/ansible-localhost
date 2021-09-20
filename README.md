@@ -98,3 +98,8 @@ apt install yui-compressor
 # Misc
 
 $ apt install inotify-tools
+
+For flowfx.de / nikola
+apt installl yui-compressor
+
+$ texlive / install --cask mactex
