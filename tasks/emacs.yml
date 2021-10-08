@@ -1,0 +1,54 @@
+---
+# Installing Emacs and its dependencies on macOS
+# https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#on-macos
+- name: Install Doom dependencies on macOS
+  community.general.homebrew:
+    name:
+      - ripgrep
+      - coreutils
+      - fd
+      - pandoc # for markdown-preview
+      - shellcheck # for shell script linting
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: emacs
+
+# TODO: Conditionally include
+# https://github.com/elliotweiser/ansible-osx-command-line-tools to install
+# macOS command line tools. Until then do:
+# $ xcode-select --install
+
+- name: Tap emacs-mac repository
+  community.general.homebrew_tap:
+    name: railwaycat/emacsmacport
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: emacs
+
+- name: Install emacs-mac
+  community.general.homebrew:
+    name: emacs-mac
+    state: present
+    install_options: with-modules
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: emacs
+
+# We should probably run doom sync if this step updates anything
+
+- name: Ensure Emacs.app is linked into /Applications
+  file:
+    src: /usr/local/opt/emacs-mac/Emacs.app
+    dest: /Applications/Emacs.app
+    state: link
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: emacs
+
+# Installing Doom Emacs
+# https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#doom-emacs
+- name: Ensure Doom is present
+  git:
+    repo: 'https://github.com/hlissner/doom-emacs'
+    dest: ~/.emacs.d
+    update: no
+  tags: emacs
+
+# After first istall, run ~/.emacs.d/bin/doom install which creates ~/.doom.d
