@@ -1,7 +1,7 @@
 ---
 - name: Install Syncthing on macOS
   community.general.homebrew:
-    name: ['syncthing', 'qsyncthingtray']
+    name: ['syncthing']
     state: present
   when: ansible_facts['os_family'] == 'Darwin'
   tags: syncthing

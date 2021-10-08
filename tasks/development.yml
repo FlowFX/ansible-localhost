@@ -13,6 +13,7 @@
     repo: ppa:neovim-ppa/unstable
     state: present
   become: yes
+  when: ansible_facts['os_family'] == 'Debian'
   tags: ['development', 'vim']
 
 - name: Ensure libpq is installed on Ubuntu - dependency for pg gem
