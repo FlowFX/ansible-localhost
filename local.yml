@@ -102,6 +102,8 @@
   handlers:
     - name: run rcup
       command: env RCRC=$HOME/dotfiles/rcrc rcup
+    - name: run doom sync
+      command: doom sync
     - name: reread systemd configs
       systemd:
         daemon_reload: yes

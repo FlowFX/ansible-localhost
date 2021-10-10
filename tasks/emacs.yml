@@ -30,9 +30,9 @@
     state: present
     install_options: with-modules
   when: ansible_facts['os_family'] == 'Darwin'
+  notify:
+    - run doom sync
   tags: emacs
-
-# We should probably run doom sync if this step updates anything
 
 - name: Ensure Emacs.app is linked into /Applications
   file:
@@ -49,6 +49,8 @@
     repo: 'https://github.com/hlissner/doom-emacs'
     dest: ~/.emacs.d
     update: no
+  notify:
+    - run doom sync
   tags: emacs
 
 # After first istall, run ~/.emacs.d/bin/doom install which creates ~/.doom.d
