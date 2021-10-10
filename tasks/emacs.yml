@@ -53,4 +53,11 @@
     - run doom sync
   tags: emacs
 
-# After first istall, run ~/.emacs.d/bin/doom install which creates ~/.doom.d
+- name: Clone my .doom.d configs
+  git:
+    repo: 'git@codeberg.org:flowfx/doom.d.git'
+    dest: ~/.doom.d
+    update: no
+  notify:
+    - run doom sync
+  tags: emacs
