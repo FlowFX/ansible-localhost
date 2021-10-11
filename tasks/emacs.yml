@@ -1,4 +1,8 @@
 ---
+#############
+### macOS ###
+#############
+
 # Installing Emacs and its dependencies on macOS
 # https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#on-macos
 - name: Install Doom dependencies on macOS
@@ -41,6 +45,49 @@
     state: link
   when: ansible_facts['os_family'] == 'Darwin'
   tags: emacs
+
+
+##############
+### Ubuntu ###
+##############
+
+# Installing Emacs and its dependencies on Ubuntu
+# https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#ubuntu
+- name: Add Emacs27 PPA
+  apt_repository:
+    repo: ppa:kelleyk/emacs
+    state: present
+  become: yes
+  register: aptstatus
+  when: ansible_distribution == 'Ubuntu'
+  tags: emacs
+
+- name: apt update if necessary
+  apt:
+    update_cache: yes
+  when: aptstatus.changed == True
+  become: yes
+  tags: emacs
+
+- name: Install Emacs27
+  apt:
+    name: emacs27
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: emacs
+
+- name: Install Emacs dependencies
+  apt:
+    name: ['ripgrep', 'fd-find']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: emacs
+
+###############
+### General ###
+###############
 
 # Installing Doom Emacs
 # https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#doom-emacs
