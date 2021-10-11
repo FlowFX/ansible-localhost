@@ -32,6 +32,11 @@
       when: ansible_facts['os_family'] != 'Darwin'
       tags: firewall
 
+    - name: Set up NTP on Linux
+      include_tasks: tasks/ntp.yml
+      tags: ntp
+      when: ansible_facts['os_family'] != 'Darwin'
+
     - name: Install and configure X11 on Linux
       include_tasks: tasks/x11.yml
       when: ansible_facts['os_family'] != 'Darwin'

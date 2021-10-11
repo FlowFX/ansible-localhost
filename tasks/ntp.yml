@@ -5,22 +5,11 @@
   become: yes
   tags: ntp
 
-- name: Enable NTP Service on Debian
+- name: Enable NTP Service
   systemd:
     name: ntp.service
     scope: system
     enabled: yes
     state: started
   become: yes
-  when: ansible_facts['os_family'] == 'Debian'
-  tags: ntp
-
-- name: Enable NTP Service on Arch
-  systemd:
-    name: ntpd.service
-    scope: system
-    enabled: yes
-    state: started
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
   tags: ntp
