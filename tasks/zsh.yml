@@ -1,4 +1,5 @@
 ---
+# Linux
 - name: Ensure ZSH and Git are present on Linux
   package:
     name: ['zsh', 'git']
@@ -7,18 +8,19 @@
   when: ansible_facts['os_family'] != 'Darwin'
   tags: zsh
 
-- name: Ensure ZSH and Git are present on macOS
-  homebrew:
-    name: ['zsh', 'git']
-  when: ansible_facts['os_family'] == 'Darwin'
-  tags: zsh
-
 - name: Set user shell to ZSH on Linux
   user:
     name: flowfx
     shell: /bin/zsh
   become: yes
   when: ansible_facts['os_family'] != 'Darwin'
+  tags: zsh
+
+# macOS
+- name: Ensure ZSH and Git are present on macOS
+  homebrew:
+    name: ['zsh', 'git']
+  when: ansible_facts['os_family'] == 'Darwin'
   tags: zsh
 
 - name: Ensure ZSH path is included in /etc/shells on macOS
@@ -39,6 +41,7 @@
   when: ansible_facts['os_family'] == 'Darwin'
   tags: zsh
 
+# General
 - name: Clone OhMyZsh
   git:
     repo: 'https://github.com/ohmyzsh/ohmyzsh.git'

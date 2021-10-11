@@ -42,15 +42,6 @@ Run the complete playbook.
 $ ansible-playbook local.yml
 ```
 
-Install asdf.
-
-```
-$ asdf update
-$ asdf plugin add nodejs
-$ asdf plugin add yarn
-$ asdf plugin add ruby
-```
-
 etc. pp...
 
 Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11-on-ubuntu-linux/
@@ -59,6 +50,14 @@ Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11
 $ sudo apt install postgresql-11-postgis-2.5
 $ sudo apt install redis
 ```
+
+Install asdf plugins
+
+$ asdf install
+
+Install hex for elixir
+
+$ mix local.hex
 
 ## More work foo
 
@@ -103,3 +102,27 @@ For flowfx.de / nikola
 apt installl yui-compressor
 
 $ texlive / install --cask mactex
+
+
+
+
+
+
+
+
+github cli
+https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install gh
+
+
+Configure autocomplete!
+https://cli.github.com/manual/gh_completion
+
+
+
+## hURL
+curl -LO https://github.com/Orange-OpenSource/hurl/releases/download/1.3.1/hurl_1.3.1_amd64.deb
+sudo dpkg -i hurl_1.3.1_amd64.deb

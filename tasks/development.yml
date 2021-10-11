@@ -8,11 +8,18 @@
   when: ansible_facts['os_family'] != 'Darwin'
   tags: development
 
-- name: Add Neovim PPA
+- name: Ensure direnv is installed on macOS
+  homebrew:
+    name: direnv
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: development
+
+- name: Add Neovim PPA on Debian
   apt_repository:
     repo: ppa:neovim-ppa/unstable
     state: present
   become: yes
+  when: ansible_facts['os_family'] == 'Debian'
   tags: ['development', 'vim']
 
 - name: Ensure libpq is installed on Ubuntu - dependency for pg gem
@@ -21,26 +28,13 @@
     state: present
   become: yes
   when: ansible_facts['os_family'] == 'Debian'
-  tags: development
-
-- name: Ensure direnv is installed on macOS
-  homebrew:
-    name: direnv
-  when: ansible_facts['os_family'] == 'Darwin'
-  tags: development
+  tags: ['development', 'postgresql']
 
 - name: Ensure dependencies for asdf are present on Debian
   package:
     name: ['build-essential', 'libssl-dev', 'libreadline-dev', 'zlib1g-dev', 'gpg']
   become: yes
   when: ansible_facts['os_family'] == 'Debian'
-  tags: development
-
-- name: Ensure dependencies for asdf are present on Arch (uncomplete)
-  package:
-    name: ['readline']
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
   tags: development
 
 - name: Ensure asdf is installed
@@ -52,27 +46,8 @@
   notify:
     - run asdf update
 
-# - name: Add asdf Ruby plugin
-#   shell: asdf plugin add ruby
-#   args:
-#     creates: ~/.asdf/plugins/ruby/
-#   tags: development
-
-  # NOTE: This somehow breaks the Ansible installation on Ubuntu
-  #
-  # - name: Add asdf Python plugin
-  #   shell: asdf plugin add python
-  #   args:
-  #     creates: ~/.asdf/plugins/python/
-  #   tags: development
-
-# - name: Add asdf NodeJS plugin
-#   shell: asdf plugin add nodejs
-#   args:
-#     creates: ~/.asdf/plugins/nodejs/
-#   tags: [ development, nodejs ]
-
-- file:
+- name: Ensure ~/.asdf/keyrings/nodejs directory is present
+  file:
     path: ~/.asdf/keyrings/nodejs
     state: directory
     mode: '0700'
@@ -81,20 +56,49 @@
 - name: Add asdf nodejs gpg keys to dedicated keyring
   command: bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
   args:
-    # creates: ~/.asdf/keyrings/nodejs/pubring.kbx
     creates: ~/.asdf/keyrings/nodejs/asdf-nodejs.gpg
   environment:
     GNUPGHOME: ~/.asdf/keyrings/nodejs
   tags: [ development, nodejs ]
 
-# - name: Add asdf Yarn plugin
-#   shell: asdf plugin add yarn
-#   args:
-#     creates: ~/.asdf/plugins/yarn/
-#   tags: development
+- name: Add asdf Ruby plugin
+  shell: asdf plugin add ruby
+  args:
+    creates: ~/.asdf/plugins/ruby/
+  tags: development
+
+- name: Add asdf Python plugin
+  shell: asdf plugin add python
+  args:
+    creates: ~/.asdf/plugins/python/
+  tags: development
+
+- name: Add asdf NodeJS plugin
+  shell: asdf plugin add nodejs
+  args:
+    creates: ~/.asdf/plugins/nodejs/
+  tags: [ development, nodejs ]
+
+- name: Add asdf Yarn plugin
+  shell: asdf plugin add yarn
+  args:
+    creates: ~/.asdf/plugins/yarn/
+  tags: development
+
+- name: Add asdf Erlang plugin
+  shell: asdf plugin add erlang
+  args:
+    creates: ~/.asdf/plugins/erlang/
+  tags: development
+
+- name: Add asdf Elixir plugin
+  shell: asdf plugin add elixir
+  args:
+    creates: ~/.asdf/plugins/elixir/
+  tags: development
 
 # https://stackoverflow.com/a/50349235
-- name: Set low precedence for api.rubygems.org IPv6 addresses.
+- name: Set low precedence for api.rubygems.org IPv6 addresses on Linux
   lineinfile:
     path: /etc/gai.conf
     regexp: '^precedence  2a04:4e42::0/32'
@@ -104,35 +108,6 @@
   when: ansible_facts['os_family'] != 'Darwin'
   tags: development
 
-
-# POSTGRESQL
-- name: Install dependencies for running a PostgreSQL docker image
-  package:
-    name: ['docker', 'postgresql', 'pgadmin4']
-    state: present
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: [ development, docker, postgresql ]
-
-# This stores all docker images on the home partition, which is usually much
-# larger.
-- name: Copy Docker settings
-  copy:
-    src: daemon.json
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: '0644'
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: [ development, docker, postgresql ]
-
-- name: Enable docker.service
-  systemd:
-    name: docker.service
-    scope: system
-    enabled: yes
-    state: started
-  become: yes
-  when: ansible_facts['os_family'] == 'Archlinux'
-  tags: [ development, docker, postgresql ]
+# - shell: asdf install
+#   tags: development
+#   ONLY WHEN A NEW PLUGIN HAS BEEN ADDED

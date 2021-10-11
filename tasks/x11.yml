@@ -1,15 +1,7 @@
 ---
-- name: Install Xorg, i3 on Debian
-  apt:
-    name: '{{ x11_packages_debian }}'
-    state: present
-  become: yes
-  when: ansible_facts['os_family'] == 'Debian'
-  tags: x11
-
-- name: Install Xorg utilities
+- name: Install Xorg, i3 & utilites
   package:
-    name: '{{ x11_packages }}'
+    name: ['xorg', 'i3', 'xcape', 'arandr', 'autorandr', 'maim', 'xclip']
     state: present
   become: yes
   tags: x11
@@ -20,44 +12,20 @@
   become: yes
   tags: x11
 
-- name: Configure keyboard for Ubuntu (1/2)
+- name: Configure keyboard layout
   lineinfile:
     path: /etc/default/keyboard
     regexp: '^XKBLAYOUT='
     line: XKBLAYOUT="eu"
     create: yes
   become: yes
-  when: ansible_distribution == 'Ubuntu'
   tags: x11
 
-- name: Configure keyboard for Ubuntu (2/2)
+- name: Configure Caps key
   lineinfile:
     path: /etc/default/keyboard
     regexp: '^XKBOPTIONS='
     line: XKBOPTIONS="caps:ctrl_modifier"
     create: yes
   become: yes
-  when: ansible_distribution == 'Ubuntu'
-  tags: x11
-
-- name: Configure X11 keyboard settings for Arch & Debian
-  copy:
-    src: 00-keyboard.conf
-    dest: /etc/X11/xorg.conf.d/00-keyboard.conf
-    owner: root
-    group: root
-    mode: '0644'
-  become: yes
-  when: ansible_distribution != 'Ubuntu'
-  tags: x11
-
-- name: Copy X11 monitor settings
-  copy:
-    src: 10-monitor.conf
-    dest: /etc/X11/xorg.conf.d/10-monitor.conf
-    owner: root
-    group: root
-    mode: '0644'
-  become: yes
-  when: ansible_distribution != 'Ubuntu'
   tags: x11

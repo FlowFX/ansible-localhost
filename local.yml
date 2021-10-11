@@ -11,25 +11,34 @@
     asdf_keyrings_dir: ~/.asdf/keyrings/
 
   tasks:
-    - include_tasks: tasks/bootstrap.yml
+    - name: Install Git and configure ansible
+      include_tasks: tasks/bootstrap.yml
       tags: bootstrap
-    - include_tasks: tasks/packages.yml
+
+    - name: Install packages defined in vars
+      include_tasks: tasks/packages.yml
       tags: packages
-    - include_tasks: tasks/zsh.yml
+
+    - name: Install and configure zsh and oh-my-zsh
+      include_tasks: tasks/zsh.yml
       tags: zsh
-    - include_tasks: tasks/dotfiles.yml
+
+    - name: Set up dotfiles and dotfiles-local
+      include_tasks: tasks/dotfiles.yml
       tags: dotfiles
 
-    - include_tasks: tasks/firewall.yml
+    - name: Set up UFW on Linux
+      include_tasks: tasks/firewall.yml
+      when: ansible_facts['os_family'] != 'Darwin'
       tags: firewall
-      when: ansible_facts['os_family'] != 'Darwin'
 
-    - name: Install and configure X11
+    - name: Install and configure X11 on Linux
       include_tasks: tasks/x11.yml
-      tags: x11
       when: ansible_facts['os_family'] != 'Darwin'
+      tags: x11
 
-    - include_tasks: tasks/development.yml
+    - name: Install and configure dev environment
+      include_tasks: tasks/development.yml
       tags: [ development, docker, postgresql ]
 
     # - include_tasks: tasks/powersafe.yml
