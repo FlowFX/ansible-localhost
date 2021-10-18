@@ -1,0 +1,110 @@
+---
+#############
+### macOS ###
+#############
+
+# Installing Emacs and its dependencies on macOS
+# https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#on-macos
+- name: Install Doom dependencies on macOS
+  community.general.homebrew:
+    name:
+      - ripgrep
+      - coreutils
+      - fd
+      - pandoc # for markdown-preview
+      - shellcheck # for shell script linting
+    state: present
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: emacs
+
+# TODO: Conditionally include
+# https://github.com/elliotweiser/ansible-osx-command-line-tools to install
+# macOS command line tools. Until then do:
+# $ xcode-select --install
+
+- name: Tap emacs-mac repository
+  community.general.homebrew_tap:
+    name: railwaycat/emacsmacport
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: emacs
+
+- name: Install emacs-mac
+  community.general.homebrew:
+    name: emacs-mac
+    state: present
+    install_options: with-modules
+  when: ansible_facts['os_family'] == 'Darwin'
+  notify:
+    - run doom sync
+  tags: emacs
+
+- name: Ensure Emacs.app is linked into /Applications
+  file:
+    src: /usr/local/opt/emacs-mac/Emacs.app
+    dest: /Applications/Emacs.app
+    state: link
+  when: ansible_facts['os_family'] == 'Darwin'
+  tags: emacs
+
+
+##############
+### Ubuntu ###
+##############
+
+# Installing Emacs and its dependencies on Ubuntu
+# https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#ubuntu
+- name: Add Emacs27 PPA
+  apt_repository:
+    repo: ppa:kelleyk/emacs
+    state: present
+  become: yes
+  register: aptstatus
+  when: ansible_distribution == 'Ubuntu'
+  tags: emacs
+
+- name: apt update if necessary
+  apt:
+    update_cache: yes
+  when: aptstatus.changed == True
+  become: yes
+  tags: emacs
+
+- name: Install Emacs27
+  apt:
+    name: emacs27
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: emacs
+
+- name: Install Emacs dependencies
+  apt:
+    name: ['ripgrep', 'fd-find']
+    state: present
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: emacs
+
+###############
+### General ###
+###############
+
+# Installing Doom Emacs
+# https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#doom-emacs
+- name: Ensure Doom is present
+  git:
+    repo: 'https://github.com/hlissner/doom-emacs'
+    dest: ~/.emacs.d
+    update: no
+  notify:
+    - run doom sync
+  tags: emacs
+
+- name: Clone my .doom.d configs
+  git:
+    repo: 'git@codeberg.org:flowfx/doom.d.git'
+    dest: ~/.doom.d
+    update: no
+  notify:
+    - run doom sync
+  tags: emacs
