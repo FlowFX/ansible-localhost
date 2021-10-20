@@ -28,7 +28,7 @@
   systemd:
     name: syncthing.service
     scope: user
-    enabled: no
-    state: stopped
+    enabled: yes
+    state: started
   when: ansible_facts['os_family'] != 'Darwin'
   tags: syncthing
