@@ -2,7 +2,7 @@
 
   vars:
     packages: ['curl', 'direnv', 'git', 'gpg', 'wget', 'neovim', 'tmux', 'zsh', 'bzip2', 'sqlite3']
-    packages_debian: ['silversearcher-ag']
+    packages_debian: ['silversearcher-ag', 'keychain']
     packages_macos:  ['the_silver_searcher']
     x11_packages: ['xcape', 'arandr', 'autorandr', 'maim', 'xclip']
     x11_packages_debian: ['xorg', 'i3']
