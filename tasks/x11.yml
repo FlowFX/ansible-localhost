@@ -1,7 +1,7 @@
 ---
 - name: Install Xorg, i3 & utilites
   package:
-    name: ['xorg', 'i3', 'xcape', 'arandr', 'autorandr', 'maim', 'xclip']
+    name: ['xorg', 'i3', 'xcape', 'arandr', 'autorandr', 'maim', 'xclip', 'xbacklight']
     state: present
   become: yes
   tags: x11
@@ -10,6 +10,19 @@
     path: /etc/X11/xorg.conf.d
     state: directory
   become: yes
+  tags: x11
+
+# Fix for to set correct directory in /sys/class/backlight/
+# https://wiki.archlinux.org/title/Screen_brightness#xbacklight
+- name: Configure intel_backlight on hotmilk
+  copy:
+    src: 20-intel.conf
+    dest: /etc/X11/xorg.conf.d/20-intel.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+  when: ansible_hostname == 'hotmilk'
   tags: x11
 
 - name: Configure keyboard layout
