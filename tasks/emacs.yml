@@ -85,6 +85,15 @@
   when: ansible_facts['os_family'] == 'Debian'
   tags: emacs
 
+- name: Enable Emacs user service
+  systemd:
+    name: emacs.service
+    scope: user
+    enabled: yes
+    state: started
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: emacs
+
 ###############
 ### General ###
 ###############
