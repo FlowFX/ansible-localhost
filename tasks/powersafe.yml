@@ -1,68 +1,18 @@
-# logind.conf
-- name: Ignore power key
-  lineinfile:
-    path: /etc/systemd/logind.conf
-    regexp: '^HandlePowerKey='
-    line: HandlePowerKey=ignore
-  tags: powersafe
-  become: yes
+# https://thinkwiki.de/TLP_-_Linux_Stromsparen
 
-- name: SuspendKey activates suspend-then-hibernate
-  lineinfile:
-    path: /etc/systemd/logind.conf
-    regexp: '^HandleSuspendKey='
-    line: HandleSuspendKey=suspend-then-hibernate
-  tags: powersafe
-  become: yes
-
-- name: LidSwitch activates suspend-then-hibernate
-  lineinfile:
-    path: /etc/systemd/logind.conf
-    regexp: '^HandleLidSwitch='
-    line: HandleLidSwitch=suspend-then-hibernate
-  tags: powersafe
-  become: yes
-
-- lineinfile:
-    path: /etc/systemd/logind.conf
-    regexp: '^HandleLidSwitchExternalPower='
-    line: HandleLidSwitchExternalPower=suspend-then-hibernate
-  tags: powersafe
-  become: yes
-
-- lineinfile:
-    path: /etc/systemd/logind.conf
-    regexp: '^HandleLidSwitchDocked='
-    line: HandleLidSwitchDocked=suspend-then-hibernate
-  tags: powersafe
-  become: yes
-
-# sleep.conf
-- name: Ensure SuspendThenHibernate is enabled
-  lineinfile:
-    path: /etc/systemd/sleep.conf
-    regexp: '^AllowSuspendThenHibernate='
-    line: AllowSuspendThenHibernate=yes
-  become: yes
-  tags: powersafe
-  notify:
-    - reread systemd configs
-
-- name: Ensure SuspendThenHibernate is delayed for 6h
-  lineinfile:
-    path: /etc/systemd/sleep.conf
-    regexp: '^HibernateDelaySec='
-    line: HibernateDelaySec=21600
-  become: yes
-  tags: powersafe
-  notify:
-    - reread systemd configs
-
-# tlp.service https://wiki.archlinux.org/index.php/TLP
-- package:
-    name: tlp
+- name: Add TLP PPA on Ubuntu Laptop
+  apt_repository:
+    repo: ppa:linrunner/tlp
     state: present
   become: yes
+  when: ansible_hostname == 'hotmilk'
+  tags: powersafe
+
+- package:
+    name: ['tlp', 'tlp-rdw', 'acpi-call-dkms']
+    state: present
+  become: yes
+  when: ansible_hostname == 'hotmilk'
   tags: powersafe
 
 - name: Enable TLP service
@@ -72,4 +22,5 @@
     enabled: yes
     state: started
   become: yes
+  when: ansible_hostname == 'hotmilk'
   tags: powersafe
