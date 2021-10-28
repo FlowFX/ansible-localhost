@@ -7,7 +7,7 @@
     x11_packages: ['xcape', 'arandr', 'autorandr', 'maim', 'xclip']
     x11_packages_debian: ['xorg', 'i3']
     calendar_packages: ['todoman', 'vdirsyncer', 'pass', 'khal']
-    asdf_version: 'v0.7.8'
+    asdf_version: 'v0.8.1'
     asdf_keyrings_dir: ~/.asdf/keyrings/
 
   tasks:
