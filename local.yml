@@ -90,9 +90,6 @@
     - include_tasks: tasks/homebrew.yml
       tags: homebrew
 
-    # - include_tasks: tasks/email.yml
-    #   tags: [ email, offlineimap, contacts, mutt ]
-
     - name: Install all those lovely applications
       package:
         name: ['mplayer', 'vlc', 'anki']
@@ -100,14 +97,6 @@
       become: yes
       when: ansible_facts['os_family'] != 'Darwin'
       tags: [ desktop, applications ]
-
-    # - name: Install all those lovely applications on Debian
-    #   apt:
-    #     name: ['firefox-esr']
-    #     state: present
-    #   become: yes
-    #   when: ansible_facts['os_family'] == 'Debian'
-    #   tags: [ desktop, applications ]
 
     - name: Install Emacs
       include_tasks: tasks/emacs.yml
