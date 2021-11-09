@@ -14,12 +14,12 @@
   when: ansible_facts['os_family'] != 'Darwin'
   tags: syncthing
 
-- name: Disable root  Syncthing resume service
+- name: Enable and start root Syncthing resume service
   systemd:
     name: syncthing-resume.service
     scope: system
-    enabled: no
-    state: stopped
+    enabled: yes
+    state: started
   become: yes
   when: ansible_facts['os_family'] != 'Darwin'
   tags: syncthing
