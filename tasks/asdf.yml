@@ -15,6 +15,12 @@
   notify:
     - run asdf update
 
+- name: Add asdf NodeJS plugin
+  shell: asdf plugin add nodejs
+  args:
+    creates: ~/.asdf/plugins/nodejs/
+  tags: [ asdf, nodejs ]
+
 - name: Ensure ~/.asdf/keyrings/nodejs directory is present
   file:
     path: ~/.asdf/keyrings/nodejs
@@ -41,12 +47,6 @@
   args:
     creates: ~/.asdf/plugins/python/
   tags: asdf
-
-- name: Add asdf NodeJS plugin
-  shell: asdf plugin add nodejs
-  args:
-    creates: ~/.asdf/plugins/nodejs/
-  tags: [ asdf, nodejs ]
 
 - name: Add asdf Yarn plugin
   shell: asdf plugin add yarn
