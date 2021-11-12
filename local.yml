@@ -73,9 +73,9 @@
       include_tasks: tasks/syncthing.yml
       tags: syncthing
 
-    - include_tasks: tasks/rslsync.yml
-      tags: rslsync
-      when: ansible_facts['os_family'] != 'Darwin'
+    # - include_tasks: tasks/rslsync.yml
+    #   tags: rslsync
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
     - include_tasks: tasks/backup.yml
       tags: backup
@@ -115,5 +115,5 @@
       systemd:
         daemon_reload: yes
       become: yes
-    - name: run asdf update
-      command: asdf update
+    - name: source asdf.sh
+      command: source ~/.asdf/asdf.sh

@@ -13,7 +13,7 @@
     update: no
   tags: asdf
   notify:
-    - run asdf update
+    - source asdf.sh
 
 - name: Add asdf NodeJS plugin
   shell: asdf plugin add nodejs
