@@ -114,8 +114,6 @@
     repo: 'https://github.com/hlissner/doom-emacs'
     dest: ~/.emacs.d
     update: no
-  notify:
-    - run doom sync
   tags: emacs
 
 - name: Clone my .doom.d configs
@@ -123,6 +121,6 @@
     repo: 'git@codeberg.org:flowfx/doom.d.git'
     dest: ~/.doom.d
     update: no
-  notify:
-    - run doom sync
   tags: emacs
+
+# Run doom sync! manually

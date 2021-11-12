@@ -48,10 +48,11 @@ For a new machine, run the playbook tag by tag.
 ansible-playbook local.yml --tags <tag>
 #+end_src
 
-Todo: configure onedrive & calendar
++ Todo: configure onedrive & calendar
++ Run doom sync
++ Run rcup (and disable the notifier in the playbook)
 
 
-...
 
 
 Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11-on-ubuntu-linux/
@@ -74,8 +75,6 @@ $ mix local.hex
 $ sudo apt install libcurl4-openssl-dev
 
 required for `curb`
-
-apt install brightnessctl
 
 Install MS Teams
 
@@ -108,14 +107,7 @@ apt install yui-compressor
 
 $ apt install inotify-tools
 
-For flowfx.de / nikola
-apt installl yui-compressor
-
 $ texlive / install --cask mactex
-
-
-
-
 
 
 
@@ -131,8 +123,3 @@ sudo apt install gh
 Configure autocomplete!
 https://cli.github.com/manual/gh_completion
 
-
-
-## hURL
-curl -LO https://github.com/Orange-OpenSource/hurl/releases/download/1.3.1/hurl_1.3.1_amd64.deb
-sudo dpkg -i hurl_1.3.1_amd64.deb
