@@ -8,7 +8,7 @@
 
 - name: Install Syncthing on Linux
   package:
-    name: ['syncthing', 'syncthing-gtk']
+    name: ['syncthing']
     state: present
   become: yes
   when: ansible_facts['os_family'] != 'Darwin'
