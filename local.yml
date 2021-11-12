@@ -81,15 +81,15 @@
       tags: backup
       when: ansible_facts['os_family'] != 'Darwin'
 
-    - include_tasks: tasks/onedrive.yml
-      tags: onedrive
-      when: ansible_facts['os_family'] != 'Darwin'
+    # - include_tasks: tasks/onedrive.yml
+    #   tags: onedrive
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
     - include_tasks: tasks/code.yml
       tags: code
 
-    - include_tasks: tasks/calendar.yml
-      tags: calendar
+    # - include_tasks: tasks/calendar.yml
+    #   tags: calendar
 
     - include_tasks: tasks/homebrew.yml
       tags: homebrew

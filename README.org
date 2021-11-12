@@ -48,6 +48,10 @@ For a new machine, run the playbook tag by tag.
 ansible-playbook local.yml --tags <tag>
 #+end_src
 
+Todo: configure onedrive & calendar
+
+
+...
 
 
 Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11-on-ubuntu-linux/
