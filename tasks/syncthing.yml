@@ -1,15 +1,24 @@
 ---
 - name: Install Syncthing on macOS
   community.general.homebrew:
-    name: ['syncthing']
+    name: syncthing
     state: present
   when: ansible_facts['os_family'] == 'Darwin'
   tags: syncthing
 
 - name: Install Syncthing on Linux
   package:
-    name: ['syncthing']
+    name: syncthing
     state: present
+  become: yes
+  when: ansible_facts['os_family'] != 'Darwin'
+  tags: syncthing
+
+# syncthing-gtk interfers with the sycthing user service
+- name: Remove syncthing-gtk
+  package:
+    name: syncthing-gtk
+    state: absent
   become: yes
   when: ansible_facts['os_family'] != 'Darwin'
   tags: syncthing
