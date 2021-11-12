@@ -2,14 +2,5 @@
 - git:
     repo: git@github.com:flowfx/flowfx.de.git
     dest: ~/src/flowfx/flowfx.de
-<<<<<<< Updated upstream
-=======
-    update: no
-  tags: code
-
-- git:
-    repo: git@github.com:flowfx/boxjumps.git
-    dest: ~/src/flowfx/boxjumps
->>>>>>> Stashed changes
     update: no
   tags: code
