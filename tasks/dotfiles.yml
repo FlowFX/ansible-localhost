@@ -1,9 +1,9 @@
 ---
-- name: Ensure RCM is installed on Debian
+- name: Ensure RCM is installed on Linux
   apt:
     name: rcm
   become: yes
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family != 'Darwin'
   tags: dotfiles
 
 - name: Ensure RCM is installed on macOS

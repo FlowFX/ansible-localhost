@@ -23,6 +23,10 @@
       include_tasks: tasks/zsh.yml
       tags: zsh
 
+    - name: Install and configure asdf
+      include_tasks: tasks/asdf.yml
+      tags: asdf
+
     - name: Set up dotfiles and dotfiles-local
       include_tasks: tasks/dotfiles.yml
       tags: dotfiles

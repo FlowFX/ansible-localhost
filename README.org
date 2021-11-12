@@ -1,48 +1,54 @@
-## Prerequisites
+#+TITLE: Doom Emacs Configuration
+#+AUTHOR: Florian Posdziech
+#+TOC: true
+
+* Prerequisites
+** Base system
+✅ Install Ubuntu on new machine.
 
 Install git, vim, and ansible.
 
-```
-$ sudo apt update
-$ sudo apt install git neovim ansible
+#+begin_src shell
+sudo apt install git neovim ansible
+#+end_src
 
-or:
+** Set up Git forges
 
-$ sudo pacman -S ansible
-$ brew install ansible
-```
+Generate an SSH key.
 
-Create a SSH key, and upload it to GitHub!
+#+begin_src shell
+ssh-keygen -o -a 100 -t ed25519 -C "flowfx@hostname"
+#+end_src
 
-```
-$ ssh-keygen -o -a 100 -t ed25519 -C "flowfx@hostname"
-```
++ Upload it to GitHub
++ Upload it to Codeberg
++ ssh to `git@codeberg.org` once to add server to known hosts
+
+** Bootstrap ansible playbook
 
 Clone the repository.
 
-```
-$ mkdir ~/src/flowfx
-$ git clone git@github.com:FlowFX/ansible-localhost.git ~/src/flowfx/ansible-localhost
-```
+#+begin_src shell
+mkdir ~/src/flowfx
+git clone git@github.com:FlowFX/ansible-localhost.git ~/src/flowfx/ansible-localhost
+#+end_src
 
-## Cautiously run the bootstrap task
+Cautiously run the bootstrap task
 
-```
-$ echo 'localhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts
+#+begin_src shell
+cd ~/src/flowfx/ansible-localhost
+ansible-playbook local.yml --tags bootstrap
+#+end_src
 
-$ cd ~/src/flowfx/ansible-localhost
-$ ansible-playbook --tags bootstrap local.yml
-```
+* Go from there
 
-## Go from there
+For a new machine, run the playbook tag by tag.
 
-Run the complete playbook.
+#+begin_src shell
+ansible-playbook local.yml --tags <tag>
+#+end_src
 
-```
-$ ansible-playbook local.yml
-```
 
-etc. pp...
 
 Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11-on-ubuntu-linux/
 
