@@ -8,18 +8,18 @@
 
 - name: Install Syncthing on Linux
   package:
-    name: ['syncthing', 'syncthing-gtk']
+    name: ['syncthing']
     state: present
   become: yes
   when: ansible_facts['os_family'] != 'Darwin'
   tags: syncthing
 
-- name: Enable and start root Syncthing resume service
+- name: Disable and stop root Syncthing resume service
   systemd:
     name: syncthing-resume.service
     scope: system
-    enabled: yes
-    state: started
+    enabled: no
+    state: stopped
   become: yes
   when: ansible_facts['os_family'] != 'Darwin'
   tags: syncthing

@@ -1,0 +1,67 @@
+---
+- name: Ensure dependencies for asdf are present on Debian
+  package:
+    name: ['build-essential', 'libssl-dev', 'libreadline-dev', 'zlib1g-dev', 'gpg']
+  become: yes
+  when: ansible_facts['os_family'] == 'Debian'
+  tags: asdf
+
+- name: Ensure asdf is installed
+  git:
+    repo: 'https://github.com/asdf-vm/asdf.git'
+    dest: ~/.asdf
+    update: no
+  tags: asdf
+  notify:
+    - source asdf.sh
+
+- name: Add asdf NodeJS plugin
+  shell: asdf plugin add nodejs
+  args:
+    creates: ~/.asdf/plugins/nodejs/
+  tags: [ asdf, nodejs ]
+
+- name: Ensure ~/.asdf/keyrings/nodejs directory is present
+  file:
+    path: ~/.asdf/keyrings/nodejs
+    state: directory
+    mode: '0700'
+  tags: [ asdf, nodejs ]
+
+- name: Add asdf nodejs gpg keys to dedicated keyring
+  command: bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+  args:
+    creates: ~/.asdf/keyrings/nodejs/asdf-nodejs.gpg
+  environment:
+    GNUPGHOME: ~/.asdf/keyrings/nodejs
+  tags: [ asdf, nodejs ]
+
+- name: Add asdf Ruby plugin
+  shell: asdf plugin add ruby
+  args:
+    creates: ~/.asdf/plugins/ruby/
+  tags: asdf
+
+- name: Add asdf Python plugin
+  shell: asdf plugin add python
+  args:
+    creates: ~/.asdf/plugins/python/
+  tags: asdf
+
+- name: Add asdf Yarn plugin
+  shell: asdf plugin add yarn
+  args:
+    creates: ~/.asdf/plugins/yarn/
+  tags: asdf
+
+- name: Add asdf Erlang plugin
+  shell: asdf plugin add erlang
+  args:
+    creates: ~/.asdf/plugins/erlang/
+  tags: asdf
+
+- name: Add asdf Elixir plugin
+  shell: asdf plugin add elixir
+  args:
+    creates: ~/.asdf/plugins/elixir/
+  tags: asdf

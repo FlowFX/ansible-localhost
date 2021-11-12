@@ -23,6 +23,10 @@
       include_tasks: tasks/zsh.yml
       tags: zsh
 
+    - name: Install and configure asdf
+      include_tasks: tasks/asdf.yml
+      tags: asdf
+
     - name: Set up dotfiles and dotfiles-local
       include_tasks: tasks/dotfiles.yml
       tags: dotfiles
@@ -69,23 +73,23 @@
       include_tasks: tasks/syncthing.yml
       tags: syncthing
 
-    - include_tasks: tasks/rslsync.yml
-      tags: rslsync
-      when: ansible_facts['os_family'] != 'Darwin'
+    # - include_tasks: tasks/rslsync.yml
+    #   tags: rslsync
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
     - include_tasks: tasks/backup.yml
       tags: backup
       when: ansible_facts['os_family'] != 'Darwin'
 
-    - include_tasks: tasks/onedrive.yml
-      tags: onedrive
-      when: ansible_facts['os_family'] != 'Darwin'
+    # - include_tasks: tasks/onedrive.yml
+    #   tags: onedrive
+    #   when: ansible_facts['os_family'] != 'Darwin'
 
     - include_tasks: tasks/code.yml
       tags: code
 
-    - include_tasks: tasks/calendar.yml
-      tags: calendar
+    # - include_tasks: tasks/calendar.yml
+    #   tags: calendar
 
     - include_tasks: tasks/homebrew.yml
       tags: homebrew
@@ -111,5 +115,5 @@
       systemd:
         daemon_reload: yes
       become: yes
-    - name: run asdf update
-      command: asdf update
+    - name: source asdf.sh
+      command: source ~/.asdf/asdf.sh

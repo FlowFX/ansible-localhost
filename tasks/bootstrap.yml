@@ -8,8 +8,15 @@
   become: yes
   tags: bootstrap
 
-# More often than not, this task will be useless. If the interpreter is not set
-# up properly, the task to set it up properly cannot be run anyways.
+- name: Ensure ansible.cfg contains default section header
+  lineinfile:
+    path: /etc/ansible/ansible.cfg
+    regexp: '^[defaults]'
+    line: '[defaults]'
+    create: yes
+  become: yes
+  tags: bootstrap
+
 - name: Configure default ansible python interpreter
   lineinfile:
     path: /etc/ansible/ansible.cfg

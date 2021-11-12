@@ -53,25 +53,34 @@
 
 # Installing Emacs and its dependencies on Ubuntu
 # https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#ubuntu
-- name: Add Emacs27 PPA
-  apt_repository:
-    repo: ppa:kelleyk/emacs
-    state: present
-  become: yes
-  register: aptstatus
-  when: ansible_distribution == 'Ubuntu'
-  tags: emacs
+# - name: Add Emacs27 PPA
+#   apt_repository:
+#     repo: ppa:kelleyk/emacs
+#     state: present
+#   become: yes
+#   register: aptstatus
+#   when: ansible_distribution == 'Ubuntu'
+#   tags: emacs
 
-- name: apt update if necessary
-  apt:
-    update_cache: yes
-  when: aptstatus.changed == True
-  become: yes
-  tags: emacs
+# - name: apt update if necessary
+#   apt:
+#     update_cache: yes
+#   when: aptstatus.changed == True
+#   become: yes
+#   tags: emacs
 
-- name: Install Emacs27
+# - name: Install Emacs27
+#   apt:
+#     name: emacs27
+#     state: present
+#   become: yes
+#   when: ansible_facts['os_family'] == 'Debian'
+#   tags: emacs
+
+# New with Ubuntu 21.10
+- name: Install Emacs
   apt:
-    name: emacs27
+    name: emacs
     state: present
   become: yes
   when: ansible_facts['os_family'] == 'Debian'
@@ -105,8 +114,6 @@
     repo: 'https://github.com/hlissner/doom-emacs'
     dest: ~/.emacs.d
     update: no
-  notify:
-    - run doom sync
   tags: emacs
 
 - name: Clone my .doom.d configs
@@ -114,6 +121,6 @@
     repo: 'git@codeberg.org:flowfx/doom.d.git'
     dest: ~/.doom.d
     update: no
-  notify:
-    - run doom sync
   tags: emacs
+
+# Run doom sync! manually

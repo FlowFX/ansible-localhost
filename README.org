@@ -1,48 +1,59 @@
-## Prerequisites
+#+TITLE: Doom Emacs Configuration
+#+AUTHOR: Florian Posdziech
+#+TOC: true
+
+* Prerequisites
+** Base system
+✅ Install Ubuntu on new machine.
 
 Install git, vim, and ansible.
 
-```
-$ sudo apt update
-$ sudo apt install git neovim ansible
+#+begin_src shell
+sudo apt install git neovim ansible
+#+end_src
 
-or:
+** Set up Git forges
 
-$ sudo pacman -S ansible
-$ brew install ansible
-```
+Generate an SSH key.
 
-Create a SSH key, and upload it to GitHub!
+#+begin_src shell
+ssh-keygen -o -a 100 -t ed25519 -C "flowfx@hostname"
+#+end_src
 
-```
-$ ssh-keygen -o -a 100 -t ed25519 -C "flowfx@hostname"
-```
++ Upload it to GitHub
++ Upload it to Codeberg
++ ssh to `git@codeberg.org` once to add server to known hosts
+
+** Bootstrap ansible playbook
 
 Clone the repository.
 
-```
-$ mkdir ~/src/flowfx
-$ git clone git@github.com:FlowFX/ansible-localhost.git ~/src/flowfx/ansible-localhost
-```
+#+begin_src shell
+mkdir ~/src/flowfx
+git clone git@github.com:FlowFX/ansible-localhost.git ~/src/flowfx/ansible-localhost
+#+end_src
 
-## Cautiously run the bootstrap task
+Cautiously run the bootstrap task
 
-```
-$ echo 'localhost ansible_connection=local' | sudo tee -a /etc/ansible/hosts
+#+begin_src shell
+cd ~/src/flowfx/ansible-localhost
+ansible-playbook local.yml --tags bootstrap
+#+end_src
 
-$ cd ~/src/flowfx/ansible-localhost
-$ ansible-playbook --tags bootstrap local.yml
-```
+* Go from there
 
-## Go from there
+For a new machine, run the playbook tag by tag.
 
-Run the complete playbook.
+#+begin_src shell
+ansible-playbook local.yml --tags <tag>
+#+end_src
 
-```
-$ ansible-playbook local.yml
-```
++ Todo: configure onedrive & calendar
++ Run doom sync
++ Run rcup (and disable the notifier in the playbook)
 
-etc. pp...
+
+
 
 Install postgresql on Ubuntu https://computingforgeeks.com/install-postgresql-11-on-ubuntu-linux/
 
@@ -64,8 +75,6 @@ $ mix local.hex
 $ sudo apt install libcurl4-openssl-dev
 
 required for `curb`
-
-apt install brightnessctl
 
 Install MS Teams
 
@@ -98,14 +107,7 @@ apt install yui-compressor
 
 $ apt install inotify-tools
 
-For flowfx.de / nikola
-apt installl yui-compressor
-
 $ texlive / install --cask mactex
-
-
-
-
 
 
 
@@ -121,8 +123,3 @@ sudo apt install gh
 Configure autocomplete!
 https://cli.github.com/manual/gh_completion
 
-
-
-## hURL
-curl -LO https://github.com/Orange-OpenSource/hurl/releases/download/1.3.1/hurl_1.3.1_amd64.deb
-sudo dpkg -i hurl_1.3.1_amd64.deb
